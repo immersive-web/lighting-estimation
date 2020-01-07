@@ -29,7 +29,7 @@ Traditional real-time engines had a simple global "ambient" constant value that 
 
 Global illumination describes the collective techniques used to more accurately estimate the light received from indirect reflections.
 
-## Image based lighting
+## Cube Map Textures
 
 HDR Cube Map textures, as created by the XRReflectionProbe provide all the information about light sources and indirect bounces needed to accurately render PBR materials that are diffuse, glossy, and visibly reflective.  Image based lighting effects utilizing such textures are simple to implement and perform well for VR and AR rendering.  Unfortunately, such cube map textures require a lot of video memory and can often represent the environment from a limited range of locations where such a map was captured.
 
