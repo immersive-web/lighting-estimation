@@ -63,7 +63,7 @@ Combined with other factors, such as the user's IP address, even the low frequen
 
 ### XRReflectionProbe
 
-XRReflectionProbe should only be accessible with a permissions prompt equivalent to requesting access to the camera and microphone.  XRReflectionProbe enables efficient and simple to implement image based lighting.  PBR shaders can index the mip map chain of the environment cube to reduce the memory bandwidth required while integrating multiple samples to match wider NDF's.
+XRReflectionProbe should only be accessible with a permissions prompt equivalent to requesting access to the camera.  XRReflectionProbe enables efficient and simple to implement image based lighting.  PBR shaders can index the mip map chain of the environment cube to reduce the memory bandwidth required while integrating multiple samples to match wider NDF's.
 
 ## Appendix A: Proposed partial IDL
 This is a partial IDL and is considered additive to the core IDL found in the main [explainer](explainer.md).
