@@ -51,6 +51,20 @@ When a HDR Cube Map texture is not available, or the typical soft shadow effects
 
 ## Security Implications
 
+### Feature Descriptor
+
+In order for the applications to signal their interest in accessing lighting estimation during a session, the session must be requested with appropriate feature descriptor.  The strings `xr-global-light-estimation` and `xr-global-reflection` are introduced by this module as new valid feature descriptors.
+
+`xr-global-light-estimation` enables the global light estimation feature, and is required for promises returned by `getGlobalLightEstimate` called on an `XRFrame` to succeed.
+
+`xr-global-reflection` enables the global reflection feature, and is required for promises returned by `getGlobalReflectionProbe` called on an `XRFrame` to succeed.
+
+The inline XR device MUST NOT be treated as capable of supporting the global light estimation and global reflection features.
+
+UA's may provide a reflection cube map that was pre-created by the end user in response to `xr-global-reflection`, which may differ from the environment while the `XRSession` is active. In particular, the user may choose to manually capture a reflection cube map at an earlier time when sensitive information or people are not present in the environment.
+
+UA's may provide real-time reflection cube maps, captured by cameras or other sensors reporting high frequency spatial information.  To access such real-time cube maps, the `camera` feature policy must also be enabled for the origin.
+
 ### XRLightProbe
 
 Only XRLightProbe.indirectIrradiance is guaranteed to be available either due to user privacy settings or the capabilities of the platform.
