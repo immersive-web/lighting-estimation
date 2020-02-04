@@ -13,6 +13,8 @@ The orientation of the lighting information is relative to the XRViewerPose for 
 
 It is possible to treat a synthetic VR scene as the environment that AR content will be mixed in to.  In this case, the platform will be able to report the lighting estimation using the geometry of the VR scene.  As the WebXR API does not specifically express if the world is synthetic or real, AR content is to be written the same, without such knowledge.  Such "AR in VR" techniques do not affect the WebXR specification directly and are beyond the scope of this text.
 
+## 
+
 ## Physically Based Units
 
 The lighting estimation values represent luminance and colors that may be outside the gamut of the output device.  Direct sunlight can project 5000 nits at full power, while a typical display may emit only 250-500 nits.  The objects in a scene will attenuate the power of the sun and reflect a smaller portion towards the viewer.  Even if the display can only represent such a limited gamut (such as SRGB, P3, or Rec 2020), intermediate lighting calculations used by shaders involve scaling up small values and attenuating large values outside of the displayed gamut.  When the lighting calculation results in a color that can not be displayed, the resulting value will be altered by a variety of post processing effects to match the rendering intent and aesthetic chosen by the content authors.
@@ -50,6 +52,20 @@ When an HDR Cube Map texture is available, shadows only have to consider occlusi
 When a HDR Cube Map texture is not available, or the typical soft shadow effects of image based lighting are too costly to implement, the XRLightProbe.primaryLightDirection and XRLightProbe.primaryLightIntensity can be used to render shadows cast by the most prominent light source.
 
 ## Security Implications
+
+### Feature Descriptor
+
+In order for the applications to signal their interest in accessing lighting estimation during a session, the session must be requested with appropriate feature descriptor.  The strings `xr-global-light-estimation` and `xr-global-reflection` are introduced by this module as new valid feature descriptors.
+
+`xr-global-light-estimation` enables the global light estimation feature, and is required for promises returned by `getGlobalLightEstimate` called on an `XRFrame` to succeed.
+
+`xr-global-reflection` enables the global reflection feature, and is required for promises returned by `getGlobalReflectionProbe` called on an `XRFrame` to succeed.
+
+The inline XR device MUST NOT be treated as capable of supporting the global light estimation and global reflection features.
+
+UA's may provide a reflection cube map that was pre-created by the end user in response to `xr-global-reflection`, which may differ from the environment while the `XRSession` is active. In particular, the user may choose to manually capture a reflection cube map at an earlier time when sensitive information or people are not present in the environment.
+
+UA's may provide real-time reflection cube maps, captured by cameras or other sensors reporting high frequency spatial information.  To access such real-time cube maps, the `camera` feature policy must also be enabled for the origin.
 
 ### XRLightProbe
 
