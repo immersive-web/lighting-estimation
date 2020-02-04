@@ -13,8 +13,6 @@ The orientation of the lighting information is relative to the XRViewerPose for 
 
 It is possible to treat a synthetic VR scene as the environment that AR content will be mixed in to.  In this case, the platform will be able to report the lighting estimation using the geometry of the VR scene.  As the WebXR API does not specifically express if the world is synthetic or real, AR content is to be written the same, without such knowledge.  Such "AR in VR" techniques do not affect the WebXR specification directly and are beyond the scope of this text.
 
-## 
-
 ## Physically Based Units
 
 The lighting estimation values represent luminance and colors that may be outside the gamut of the output device.  Direct sunlight can project 5000 nits at full power, while a typical display may emit only 250-500 nits.  The objects in a scene will attenuate the power of the sun and reflect a smaller portion towards the viewer.  Even if the display can only represent such a limited gamut (such as SRGB, P3, or Rec 2020), intermediate lighting calculations used by shaders involve scaling up small values and attenuating large values outside of the displayed gamut.  When the lighting calculation results in a color that can not be displayed, the resulting value will be altered by a variety of post processing effects to match the rendering intent and aesthetic chosen by the content authors.
