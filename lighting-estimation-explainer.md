@@ -65,6 +65,18 @@ Combined with other factors, such as the user's IP address, even the low frequen
 
 XRReflectionProbe should only be accessible with a permissions prompt equivalent to requesting access to the camera.  XRReflectionProbe enables efficient and simple to implement image based lighting.  PBR shaders can index the mip map chain of the environment cube to reduce the memory bandwidth required while integrating multiple samples to match wider NDF's.
 
+### Temporal and Spatial Filtering
+
+Rapid changes to incoming light can provide information about a user's surroundings that can lead to fingerprinting and side-channel attacks on user privacy.
+
+As an example, a light switch can be flipped in a room, causing the lighting estimation of two users in the same room to simultaneously change. If the precise time of the change can be observed, it can be inferred that the two users are co-located in the same physical space.
+
+Another example occurs when a nearby display is playing a video, such as an advertisement. The light from the display reflects off many surfaces in the room, contributing to the observable ambient light estimate. A timeline of light intensity changes can uniquely identify the video that is playing, even if the monitor is not in direct line-of-sight to the XR device sensors.
+
+A UA MUST apply temporal and spatial filtering of the light estimation to avoid such attacks. A low-pass filter effect can be achieved by averaging the values over the last several seconds. For single scalar values representing light intensity or color, such as `XRLightProbe.indirectIrradiance` and `XRLightProbe.primaryLightIntensity` this can be applied directly with a box-kernel. SH's have a convenient property that they can be summed and interpolated by simply interpolating their coefficients, assuming their orientation is not changing.  These SH coefficients can also be filtered as scalar values with a box-kernel.
+
+Filtered values MUST be first quantized before the box-kernel is applied.  Any vectors, such as `XRLightProbe.primaryLightDirection` should be quantized in 3d space and always return a unit vector.  Quaternion values, such as `XRReflectionProbe.orientation` and `XRReflectionProbe.orientation` must be maintained in normalized form after quantization.
+
 ## Appendix A: Proposed partial IDL
 This is a partial IDL and is considered additive to the core IDL found in the main [explainer](explainer.md).
 
