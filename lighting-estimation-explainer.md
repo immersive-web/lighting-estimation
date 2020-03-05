@@ -96,22 +96,24 @@ This is a partial IDL and is considered additive to the core IDL found in the ma
 
 ```webidl
 partial interface XRFrame {
-  Promise<XRLightProbe> getGlobalLightEstimate();
-  Promise<XRReflectionProbe> getGlobalReflectionProbe();
+  XRLightProbe? globalLightProbe;
 };
 
 [SecureContext, Exposed=Window]
-partial interface XRLightProbe {
-  readonly attribute Float32Array indirectIrradiance;
-  readonly attribute Float32Array? primaryLightDirection;
-  readonly attribute Float32Array? primaryLightIntensity;
-  readonly attribute Float32Array? sphericalHarmonicsCoefficients;
-  [SameObject] readonly attribute DOMPointReadOnly? sphericalHarmonicsOrientation;
+partial interface XRLightProbe : EventTarget {
+  readonly attribute XRSpace probeSpace;
+  readonly attribute Float32Array sphericalHarmonicsCoefficients;
+  readonly attribute DOMPointReadOnly primaryLightDirection;
+  readonly attribute DOMPointReadOnly primaryLightIntensity;
+
+  // Events
+  attribute EventHandler onreflectionchange;
 };
 
-[SecureContext, Exposed=Window]
-partial interface XRReflectionProbe {
-  [SameObject] readonly attribute DOMPointReadOnly orientation;
-  WebGLTexture? createWebGLEnvironmentCube();
+partial interface XRWebGLLayerFactory {
+  // See https://github.com/immersive-web/layers for definition.
+  // Using it in this way may justify a name change, since it
+  // would no longer just be for layer management.
+
+  WebGLTexture? getReflectionCubeMap(XRLightProbe lightProbe);
 };
-```
