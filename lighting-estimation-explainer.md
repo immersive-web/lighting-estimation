@@ -39,7 +39,7 @@ HDR Cube Map textures are commonly used to implement "Reflection Probes" in mode
 
 SH (Spherical Harmonics) are used as a more compact alternative to HDR cube maps by storing a small number of coefficient values describing a fourier series over the surface of a sphere.  SH can effectively compress cube maps, while retaining multiple lights and directionality.  Due to their lightweight nature, many SH probes can be used within a scene, be interpolated, or be calculated for locations nearer to the lit objects.
 
-WebXR API supports up to 9 SH coefficients per RGB color component, for a total of 27 floating point scalar values.  This enables the level 2 (3rd) order of details.  If a platform can not supply all 9 coefficients, it can pass 0 for the higher order coefficients resulting in an effectively lower frequency reproduction.  
+WebXR API supports up to 9 SH coefficients per RGB color component, for a total of 27 floating point scalar values.  This enables the level 2 (3rd) order of details.  If a platform can not supply all 9 coefficients, it can pass 0 for the higher order coefficients resulting in an effectively lower frequency reproduction.
 
 This "SH probe" format is used by most modern rendering engines, including Unity, Unreal, and Threejs.
 
@@ -95,23 +95,31 @@ Filtered values MUST be first quantized before the box-kernel is applied.  Any v
 This is a partial IDL and is considered additive to the core IDL found in the main [explainer](explainer.md).
 
 ```webidl
+partial interface XRSession {
+  Promise<XRLightProbe> requestLightProbe();
+}
+
 partial interface XRFrame {
-  Promise<XRLightProbe> getGlobalLightEstimate();
-  Promise<XRReflectionProbe> getGlobalReflectionProbe();
+  XRLightEstimate? getLightEstimate(XRLightProbe lightProbe);
 };
 
 [SecureContext, Exposed=Window]
-partial interface XRLightProbe {
-  readonly attribute Float32Array indirectIrradiance;
-  readonly attribute Float32Array? primaryLightDirection;
-  readonly attribute Float32Array? primaryLightIntensity;
-  readonly attribute Float32Array? sphericalHarmonicsCoefficients;
-  [SameObject] readonly attribute DOMPointReadOnly? sphericalHarmonicsOrientation;
+partial interface XRLightProbe : EventTarget {
+  readonly attribute XRSpace probeSpace;
+  attribute EventHandler onreflectionchange;
 };
 
 [SecureContext, Exposed=Window]
-partial interface XRReflectionProbe {
-  [SameObject] readonly attribute DOMPointReadOnly orientation;
-  WebGLTexture? createWebGLEnvironmentCube();
+partial interface XRLightEstimate {
+  readonly attribute Float32Array sphericalHarmonicsCoefficients;
+  readonly attribute DOMPointReadOnly primaryLightDirection;
+  readonly attribute DOMPointReadOnly primaryLightIntensity;
 };
-```
+
+partial interface XRWebGLLayerFactory {
+  // See https://github.com/immersive-web/layers for definition.
+  // Using it in this way may justify a name change, since it
+  // would no longer just be for layer management.
+
+  WebGLTexture? getReflectionCubeMap(XRLightProbe lightProbe);
+};
