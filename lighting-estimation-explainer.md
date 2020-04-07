@@ -116,10 +116,7 @@ partial interface XRLightEstimate {
   readonly attribute DOMPointReadOnly primaryLightIntensity;
 };
 
-partial interface XRWebGLLayerFactory {
-  // See https://github.com/immersive-web/layers for definition.
-  // Using it in this way may justify a name change, since it
-  // would no longer just be for layer management.
-
+// See https://github.com/immersive-web/layers for definition.
+partial interface XRWebGLBinding {
   WebGLTexture? getReflectionCubeMap(XRLightProbe lightProbe);
 };
