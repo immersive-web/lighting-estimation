@@ -25,7 +25,7 @@ As lighting is scene-relative as opposed to display-relative, the luminance valu
 
 ## Cube Map Textures
 
-HDR Cube Map textures, as returned by `XRWebGLBinding.getReflectionCubeMap()`, provides all the information about light sources and indirect bounces needed to accurately render PBR materials that are diffuse, glossy, and visibly reflective.  Image based lighting effects utilizing such textures are simple to implement and perform well for VR and AR rendering.  Unfortunately, such cube map textures require a lot of video memory and can often represent the environment from a limited range of locations where such a map was captured.
+HDR Cube Map textures, as returned by `XRWebGLBinding.getReflectionCubeMap()`, provide all the information about light sources and indirect bounces needed to accurately render PBR materials that are diffuse, glossy, and visibly reflective.  Image based lighting effects utilizing such textures are simple to implement and perform well for VR and AR rendering.  Unfortunately, such cube map textures require a lot of video memory and can often represent the environment from a limited range of locations where such a map was captured.
 
 HDR Cube Map textures are commonly used to implement "Reflection Probes" in modern rendering engines.
 
