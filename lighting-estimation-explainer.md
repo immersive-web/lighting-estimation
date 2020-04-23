@@ -50,6 +50,13 @@ When an HDR Cube Map texture is available, shadows only have to consider occlusi
 When a HDR Cube Map texture is not available, or the typical soft shadow effects of image based lighting are too costly to implement, the XRLightProbe.primaryLightDirection and XRLightProbe.primaryLightIntensity can be used to render shadows cast by the most prominent light source.
 
 ## Security Implications
+The lighting estimation API shares many potential privacy risks with the [ambient light sensor API](https://www.w3.org/TR/ambient-light/#security-and-privacy), including:
+
+- profiling: Lighting estimation can leak information about user’s use patterns and surrounding. This information can be used to enhance user profiling and behavioral analysis.
+- cross device linking: Two devices can access web sites that include the same third-party script that correlates lighting levels over time.
+- cross device communication
+
+Lighting estimation also provides additional opportunities for side channel attacks and fingerprinting risks, discussed in this section.
 
 ### Feature Descriptor
 
