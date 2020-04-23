@@ -180,7 +180,4 @@ partial interface XRLightEstimate {
 partial interface XRWebGLBinding {
   WebGLTexture? getReflectionCubeMap(XRLightProbe lightProbe);
 };
-<<<<<<< HEAD
-=======
 ```
->>>>>>> Update lighting-estimation-explainer.md
