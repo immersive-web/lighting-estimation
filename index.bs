@@ -1,0 +1,158 @@
+<pre class="metadata">
+Shortname: webxrlightingestimation-1
+Title: WebXR Lighting Estimation API Level 1
+Group: immersivewebwg
+Status: w3c/ED
+TR:
+ED:
+Previous Version:
+Repository: immersive-web/lighting-estimation
+Level: 1
+Mailing List Archives: https://lists.w3.org/Archives/Public/public-immersive-web/
+
+Editor: Brandon Jones, Google https://google.com, bajones@google.com
+Editor: Kearwood Gilbert, Mozilla https://mozilla.org/, kgilbert@mozilla.com
+
+Abstract: This specification describes support for exposing estimates of environmental lighting conditions to WebXR sessions.
+</pre>
+
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+
+<style>
+  .unstable::before {
+    content: "This section is not stable";
+    display: block;
+    font-weight: bold;
+    text-align: right;
+    color: red;
+  }
+  .unstable {
+    border: thin solid pink;
+    border-radius: .5em;
+    padding: .5em;
+    margin: .5em calc(-0.5em - 1px);
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='290'><text transform='rotate(-45)' text-anchor='middle' font-family='sans-serif' font-weight='bold' font-size='70' y='210' opacity='.1'>Unstable</text></svg>");
+    background-repeat: repeat;
+    background-color: #FFF4F4;
+  }
+  .unstable h3:first-of-type {
+    margin-top: 0.5rem;
+  }
+
+  .unstable.example:not(.no-marker)::before {
+    content: "Example " counter(example) " (Unstable)";
+    float: none;
+  }
+
+  .non-normative::before {
+    content: "This section is non-normative.";
+    font-style: italic;
+  }
+  .tg {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  .tg th {
+    border-style: solid;
+    border-width: 1px;
+    background: #90b8de;
+    color: #fff;
+    font-family: sans-serif;
+    font-weight: bold;
+    border-color: grey;
+  }
+  .tg td {
+    padding: 4px 5px;
+    background-color: rgb(221, 238, 255);
+    font-family: monospace;
+    border-style: solid;
+    border-width: 1px;
+    border-color: grey;
+    overflow: hidden;
+    word-break: normal;
+  }
+</style>
+
+Introduction {#intro}
+============
+
+The WebXR Lighting Estimation module expands the <a href="https://www.w3.org/TR/webxr/">WebXR Device API</a>, the <a href="https://immersive-web.github.io/webxr-ar-module/">WebXR Augmented Reality Module</a>, and the <a href="https://immersive-web.github.io/layers/">WebXR Layers module</a> with the ability to expose estimates of the lighting conditions of the user's environment.
+
+Light Primitives {#light-primitives}
+================
+
+XRLightProbe {#xrlightprobe-interface}
+------------
+
+An {{XRLightProbe}} collects estimated lighting information at a given point in the user's environment.
+
+<pre class="idl">
+[SecureContext, Exposed=Window]
+partial interface XRLightProbe : EventTarget {
+  readonly attribute XRSpace probeSpace;
+  attribute EventHandler onreflectionchange;
+};
+</pre>
+
+XRLightEstimate {#xrlightestimate-interface}
+------------
+
+An {{XRLightEstimate}} provides the estimated lighting values for an {{XRLightProbe}} at the time represented by an {{XRFrame}}. {{XRLightEstimate}}s are queried by passing an {{XRLightProbe}} to the {{XRFrame/getLightEstimate()}} method of an {{XRFrame}}.
+
+<pre class="idl">
+[SecureContext, Exposed=Window]
+partial interface XRLightEstimate {
+  readonly attribute Float32Array sphericalHarmonicsCoefficients;
+  readonly attribute DOMPointReadOnly primaryLightDirection;
+  readonly attribute DOMPointReadOnly primaryLightIntensity;
+};
+</pre>
+
+WebXR Device API Integration {#webxr-device-api-integration}
+============================
+
+Both the {{XRSession}} and {{XRFrame}} interfaces from the <a href="https://www.w3.org/TR/webxr/">WebXR Device API</a> are expanded by this module.
+
+Session Initialization {#session-initialization}
+----------------------
+
+The string "<dfn for="feature descriptor">light-estimation</dfn>" is introduced by this module as a new valid [=feature descriptor=]. Applications that wish to use light estimation features MUST be requested with an the "[=feature descriptor/light-estimation=]" [=feature descriptor=].
+
+XRSession {#xrsession-interface}
+---------
+
+The {{XRSession}} interface is extended with the ability to create new {{XRLightProbe}} instances.
+
+<pre class="idl">
+partial interface XRSession {
+  Promise<XRLightProbe> requestLightProbe();
+};
+</pre>
+
+XRFrame {#xrframe-interface}
+-------
+
+The {{XRFrame}} interface is extended with the ability to query the {{XRLightEstimate}} for a given {{XRLightProbe}}.
+
+<pre class="idl">
+partial interface XRFrame {
+  XRLightEstimate? getLightEstimate(XRLightProbe lightProbe);
+};
+</pre>
+
+WebXR Layers Integration {#light-primitives}
+========================
+
+The {{XRWebGLBinding}} interface from the <a href="https://immersive-web.github.io/layers/">WebXR Layers module</a> is expanded by this module.
+
+XRWebGLBinding {#xrwebglbinding-interface}
+--------------
+
+The {{XRWebGLBinding}} interface is extended with the ability to query a reflection cube map for a given {{XRLightProbe}}.
+
+<pre class="idl">
+partial interface XRWebGLBinding {
+  WebGLTexture? getReflectionCubeMap(XRLightProbe lightProbe);
+};
+</pre>
