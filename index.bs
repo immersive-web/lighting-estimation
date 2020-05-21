@@ -16,6 +16,16 @@ Editor: Kearwood Gilbert, Mozilla https://mozilla.org/, kgilbert@mozilla.com
 Abstract: This specification describes support for exposing estimates of environmental lighting conditions to WebXR sessions.
 </pre>
 
+<pre class="link-defaults">
+spec: webxr-1;
+    type: dfn; text: feature descriptor
+</pre>
+
+<pre class="anchors">
+spec: WebGL; urlPrefix: https://www.khronos.org/registry/webgl/specs/latest/1.0/
+    type: interface; text: WebGLTexture; url: WebGLTexture
+</pre>
+
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
 
@@ -89,7 +99,7 @@ An {{XRLightProbe}} collects estimated lighting information at a given point in 
 
 <pre class="idl">
 [SecureContext, Exposed=Window]
-partial interface XRLightProbe : EventTarget {
+interface XRLightProbe : EventTarget {
   readonly attribute XRSpace probeSpace;
   attribute EventHandler onreflectionchange;
 };
@@ -102,7 +112,7 @@ An {{XRLightEstimate}} provides the estimated lighting values for an {{XRLightPr
 
 <pre class="idl">
 [SecureContext, Exposed=Window]
-partial interface XRLightEstimate {
+interface XRLightEstimate {
   readonly attribute Float32Array sphericalHarmonicsCoefficients;
   readonly attribute DOMPointReadOnly primaryLightDirection;
   readonly attribute DOMPointReadOnly primaryLightIntensity;
@@ -126,7 +136,7 @@ The {{XRSession}} interface is extended with the ability to create new {{XRLight
 
 <pre class="idl">
 partial interface XRSession {
-  Promise<XRLightProbe> requestLightProbe();
+  Promise&lt;XRLightProbe&gt; requestLightProbe();
 };
 </pre>
 
@@ -141,7 +151,7 @@ partial interface XRFrame {
 };
 </pre>
 
-WebXR Layers Integration {#light-primitives}
+WebXR Layers Integration {#webxr-layers-integration}
 ========================
 
 The {{XRWebGLBinding}} interface from the <a href="https://immersive-web.github.io/layers/">WebXR Layers module</a> is expanded by this module.
