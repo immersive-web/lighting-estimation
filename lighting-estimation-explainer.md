@@ -141,7 +141,6 @@ UA's may provide a reflection cube map that was pre-created by the end user, whi
 
 #### Cube Map Open Questions:
   - Is there a size tolerance for the cube maps re: user consent? ARCore's cube maps are limited to 16px per side, which seems difficult to get sensitive information out of.
-  - Should/can we dictate the format the cube maps return in. ARCore prefers Half Float values, which is hard for WebGL 1 compatibility and cubemap gen. No idea what format ARKit's textures are in.
   - Should we handle mipmapping for the user. My gut and ARCore says no, but I'm not sure what ARKit does here either.
   - Should we allow for a single texture to be returned multiple times? Seems potentially fragile but may incur unnecessary readback on iOS.
 
@@ -170,8 +169,8 @@ partial interface XRFrame {
 };
 
 enum XRReflectionCubeMapFormat {
-  "srgb8",
-  "hdr16f",
+  "srgba8",
+  "rgba16f",
 };
 
 [SecureContext, Exposed=Window]
