@@ -129,6 +129,12 @@ lightProbe.addEventListener('reflectionchange', () => {
 });
 ```
 
+By default the cube map will be returned as a 8BPP sRGB texture. Some underlying runtimes may deliver the text data in a different "native" format however, such high dynamic range formats. The light probe's preferred internal format is reported by the `XRLightProbe.preferredReflectionCubeMapFormat`, which may alternately be specified when querying the cube map. Querying the cube map using the preferred format ensures the minimal amount of conversion needs to happen, which in turn may be faster and experience less data loss. PAssing any value other than `"srgb8"` or the light probe's `preferredReflectionCubeMapFormat` to `getReflectionCubeMap()` will cause a `null` texture to be returned.
+
+```js
+let glCubeMap = glBinding.getReflectionCubeMap(lightProbe, lightProbe.preferredReflectionCubeMapFormat);
+```
+
 UA's may provide real-time reflection cube maps, captured by cameras or other sensors reporting high frequency spatial information. To access such real-time cube maps, the `camera` feature policy must be enabled for the origin. `XRWebGLBinding.getReflectionCubeMap()` should only return real-time cube maps following user consent equivalent to requesting access to the camera.
 
 UA's may provide a reflection cube map that was pre-created by the end user, which may differ from the environment while the `XRSession` is active. In particular, the user may choose to manually capture a reflection cube map at an earlier time when sensitive information or people are not present in the environment.
@@ -163,9 +169,15 @@ partial interface XRFrame {
   XRLightEstimate? getLightEstimate(XRLightProbe lightProbe);
 };
 
+enum XRReflectionCubeMapFormat {
+  "srgb8",
+  "hdr16f",
+};
+
 [SecureContext, Exposed=Window]
 partial interface XRLightProbe : EventTarget {
   readonly attribute XRSpace probeSpace;
+  readonly attribute XRReflectionCubeMapFormat preferredReflectionCubeMapFormat;
   attribute EventHandler onreflectionchange;
 };
 
@@ -178,6 +190,6 @@ partial interface XRLightEstimate {
 
 // See https://github.com/immersive-web/layers for definition.
 partial interface XRWebGLBinding {
-  WebGLTexture? getReflectionCubeMap(XRLightProbe lightProbe);
+  WebGLTexture? getReflectionCubeMap(XRLightProbe lightProbe, XRReflectionCubeMapFormat format="srgb8");
 };
 ```
