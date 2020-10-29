@@ -129,7 +129,7 @@ lightProbe.addEventListener('reflectionchange', () => {
 });
 ```
 
-By default the cube map will be returned as a 8BPP sRGB texture. Some underlying runtimes may deliver the text data in a different "native" format however, such high dynamic range formats. The light probe's preferred internal format is reported by the `XRLightProbe.preferredReflectionCubeMapFormat`, which may alternately be specified when querying the cube map. Querying the cube map using the preferred format ensures the minimal amount of conversion needs to happen, which in turn may be faster and experience less data loss. PAssing any value other than `"srgb8"` or the light probe's `preferredReflectionCubeMapFormat` to `getReflectionCubeMap()` will cause a `null` texture to be returned.
+By default the cube map will be returned as a 8BPP sRGB texture. Some underlying runtimes may deliver the text data in a different "native" format however, such high dynamic range formats. The light probe's preferred internal format is reported by the `XRLightProbe.preferredReflectionCubeMapFormat`, which may alternately be specified when querying the cube map. Querying the cube map using the preferred format ensures the minimal amount of conversion needs to happen, which in turn may be faster and experience less data loss. Passing any value other than `"srgb8"` or the light probe's `preferredReflectionCubeMapFormat` to `getReflectionCubeMap()` will cause a `null` texture to be returned.
 
 ```js
 let glCubeMap = glBinding.getReflectionCubeMap(lightProbe, lightProbe.preferredReflectionCubeMapFormat);
