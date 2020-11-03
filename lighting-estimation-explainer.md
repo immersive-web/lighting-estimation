@@ -129,11 +129,13 @@ lightProbe.addEventListener('reflectionchange', () => {
 });
 ```
 
-By default the cube map will be returned as a 8BPP sRGB texture. Some underlying runtimes may deliver the text data in a different "native" format however, such high dynamic range formats. The light probe's preferred internal format is reported by the `XRLightProbe.preferredReflectionCubeMapFormat`, which may alternately be specified when querying the cube map. Querying the cube map using the preferred format ensures the minimal amount of conversion needs to happen, which in turn may be faster and experience less data loss. Passing any value other than `"srgb8"` or the light probe's `preferredReflectionCubeMapFormat` to `getReflectionCubeMap()` will cause a `null` texture to be returned.
+By default the cube map will be returned as a 8BPP sRGB texture. Some underlying runtimes may deliver the text data in a different "native" format however, such high dynamic range formats. The session's preferred internal format for reflection maps is reported by the `XRWebGLBinding.preferredReflectionFormat`, which may alternately be specified when requesting the light probe. Querying cube maps using the preferred format ensures the minimal amount of conversion needs to happen, which in turn may be faster and experience less data loss. Passing any value other than `"srgb8"` or the light probe's `preferredReflectionCubeMapFormat` to the `reflectionFormat` option of `requestLightProbe()` will cause the promise to be rejected.
 
 ```js
-let glCubeMap = glBinding.getReflectionCubeMap(lightProbe, lightProbe.preferredReflectionCubeMapFormat);
+let lightProbe = await xrSession.requestLightProbe({ reflectionFormat: xrSession.preferredReflectionFormat });
 ```
+
+If a reflection is queried for a light probe using the `rgba16f` format from an `XRWebGLBinding` that uses a WebGL 1.0 context without the `OES_texture_half_float` extension enabled the `getReflectionCubeMap()` call will fail and return false. The `OES_texture_half_float` extension or a WebGL 2.0 context must be used in order for `rgba16f` cube maps to be returned.
 
 UA's may provide real-time reflection cube maps, captured by cameras or other sensors reporting high frequency spatial information. To access such real-time cube maps, the `camera` feature policy must be enabled for the origin. `XRWebGLBinding.getReflectionCubeMap()` should only return real-time cube maps following user consent equivalent to requesting access to the camera.
 
@@ -160,23 +162,27 @@ Filtered values MUST be first quantized before the box-kernel is applied. Any ve
 This is a partial IDL and is considered additive to the core IDL found in the main [explainer](explainer.md).
 
 ```webidl
+enum XRReflectionFormat {
+  "srgba8",
+  "rgba16f",
+};
+
+dictionary XRLightProbeInit {
+  XRReflectionFormat reflectionFormat = "srgba8";
+};
+
 partial interface XRSession {
-  Promise<XRLightProbe> requestLightProbe();
-}
+  Promise<XRLightProbe> requestLightProbe(XRLightProbeInit options = {});
+  readonly attribute XRReflectionFormat preferredReflectionFormat;
+};
 
 partial interface XRFrame {
   XRLightEstimate? getLightEstimate(XRLightProbe lightProbe);
 };
 
-enum XRReflectionCubeMapFormat {
-  "srgba8",
-  "rgba16f",
-};
-
 [SecureContext, Exposed=Window]
 partial interface XRLightProbe : EventTarget {
   readonly attribute XRSpace probeSpace;
-  readonly attribute XRReflectionCubeMapFormat preferredReflectionCubeMapFormat;
   attribute EventHandler onreflectionchange;
 };
 
@@ -189,6 +195,6 @@ partial interface XRLightEstimate {
 
 // See https://github.com/immersive-web/layers for definition.
 partial interface XRWebGLBinding {
-  WebGLTexture? getReflectionCubeMap(XRLightProbe lightProbe, XRReflectionCubeMapFormat format="srgb8");
+  WebGLTexture? getReflectionCubeMap(XRLightProbe lightProbe);
 };
 ```
