@@ -129,13 +129,20 @@ lightProbe.addEventListener('reflectionchange', () => {
 });
 ```
 
+By default the cube map will be returned as a 8BPP sRGB texture. Some underlying runtimes may deliver the text data in a different "native" format however, such high dynamic range formats. The session's preferred internal format for reflection maps is reported by the `XRWebGLBinding.preferredReflectionFormat`, which may alternately be specified when requesting the light probe. Querying cube maps using the preferred format ensures the minimal amount of conversion needs to happen, which in turn may be faster and experience less data loss. Passing any value other than `"srgb8"` or the light probe's `preferredReflectionCubeMapFormat` to the `reflectionFormat` option of `requestLightProbe()` will cause the promise to be rejected.
+
+```js
+let lightProbe = await xrSession.requestLightProbe({ reflectionFormat: xrSession.preferredReflectionFormat });
+```
+
+If a reflection is queried for a light probe using the `rgba16f` format from an `XRWebGLBinding` that uses a WebGL 1.0 context without the `OES_texture_half_float` extension enabled the `getReflectionCubeMap()` call will fail and return false. The `OES_texture_half_float` extension or a WebGL 2.0 context must be used in order for `rgba16f` cube maps to be returned.
+
 UA's may provide real-time reflection cube maps, captured by cameras or other sensors reporting high frequency spatial information. To access such real-time cube maps, the `camera` feature policy must be enabled for the origin. `XRWebGLBinding.getReflectionCubeMap()` should only return real-time cube maps following user consent equivalent to requesting access to the camera.
 
 UA's may provide a reflection cube map that was pre-created by the end user, which may differ from the environment while the `XRSession` is active. In particular, the user may choose to manually capture a reflection cube map at an earlier time when sensitive information or people are not present in the environment.
 
 #### Cube Map Open Questions:
   - Is there a size tolerance for the cube maps re: user consent? ARCore's cube maps are limited to 16px per side, which seems difficult to get sensitive information out of.
-  - Should/can we dictate the format the cube maps return in. ARCore prefers Half Float values, which is hard for WebGL 1 compatibility and cubemap gen. No idea what format ARKit's textures are in.
   - Should we handle mipmapping for the user. My gut and ARCore says no, but I'm not sure what ARKit does here either.
   - Should we allow for a single texture to be returned multiple times? Seems potentially fragile but may incur unnecessary readback on iOS.
 
@@ -155,9 +162,19 @@ Filtered values MUST be first quantized before the box-kernel is applied. Any ve
 This is a partial IDL and is considered additive to the core IDL found in the main [explainer](explainer.md).
 
 ```webidl
+enum XRReflectionFormat {
+  "srgba8",
+  "rgba16f",
+};
+
+dictionary XRLightProbeInit {
+  XRReflectionFormat reflectionFormat = "srgba8";
+};
+
 partial interface XRSession {
-  Promise<XRLightProbe> requestLightProbe();
-}
+  Promise<XRLightProbe> requestLightProbe(XRLightProbeInit options = {});
+  readonly attribute XRReflectionFormat preferredReflectionFormat;
+};
 
 partial interface XRFrame {
   XRLightEstimate? getLightEstimate(XRLightProbe lightProbe);

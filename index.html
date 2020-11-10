@@ -2149,7 +2149,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
      <a href="#light-primitives"><span class="secno">2</span> <span class="content">Light Primitives</span></a>
      <ol class="toc">
       <li><a href="#xrlightprobe-interface"><span class="secno">2.1</span> <span class="content">XRLightProbe</span></a>
-      <li><a href="#xrlightestimate-interface"><span class="secno">2.2</span> <span class="content">XRLightEstimate</span></a>
+      <li><a href="#xrreflectionformat-interface"><span class="secno">2.2</span> <span class="content">XRReflectionFormat</span></a>
+      <li><a href="#xrlightestimate-interface"><span class="secno">2.3</span> <span class="content">XRLightEstimate</span></a>
      </ol>
     <li>
      <a href="#webxr-device-api-integration"><span class="secno">3</span> <span class="content">WebXR Device API Integration</span></a>
@@ -2196,7 +2197,36 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </pre>
    <p>The <dfn class="dfn-paneled idl-code" data-dfn-for="XRLightProbe" data-dfn-type="attribute" data-export id="dom-xrlightprobe-probespace"><code>probeSpace</code></dfn> attribute is an <code class="idl"><a data-link-type="idl" href="https://immersive-web.github.io/webxr/#xrspace" id="ref-for-xrspace①">XRSpace</a></code> that has a <a data-link-type="dfn">native origin</a> tracking the position and orientation that the <code class="idl"><a data-link-type="idl" href="#xrlightprobe" id="ref-for-xrlightprobe①">XRLightProbe</a></code>'s lighting estimations are being generated relative to.</p>
    <p>The <dfn class="dfn-paneled idl-code" data-dfn-for="XRLightProbe" data-dfn-type="attribute" data-export id="dom-xrlightprobe-onreflectionchange"><code>onreflectionchange</code></dfn> attribute is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#event-handler-idl-attributes" id="ref-for-event-handler-idl-attributes">Event handler IDL attribute</a> for the <code class="idl"><a data-link-type="idl" href="#eventdef-xrlightprobe-reflectionchange" id="ref-for-eventdef-xrlightprobe-reflectionchange">reflectionchange</a></code> event type.</p>
-   <h3 class="heading settled" data-level="2.2" id="xrlightestimate-interface"><span class="secno">2.2. </span><span class="content">XRLightEstimate</span><a class="self-link" href="#xrlightestimate-interface"></a></h3>
+   <h3 class="heading settled" data-level="2.2" id="xrreflectionformat-interface"><span class="secno">2.2. </span><span class="content">XRReflectionFormat</span><a class="self-link" href="#xrreflectionformat-interface"></a></h3>
+<pre class="idl highlight def"><c- b>enum</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="enum" data-export id="enumdef-xrreflectionformat"><code><c- g>XRReflectionFormat</c-></code></dfn> {
+  <dfn class="dfn-paneled idl-code" data-dfn-for="XRReflectionFormat" data-dfn-type="enum-value" data-export id="dom-xrreflectionformat-srgba8"><code><c- s>"srgba8"</c-></code></dfn>,
+  <dfn class="dfn-paneled idl-code" data-dfn-for="XRReflectionFormat" data-dfn-type="enum-value" data-export id="dom-xrreflectionformat-rgba16f"><code><c- s>"rgba16f"</c-></code></dfn>,
+};
+</pre>
+   <p>Reflection cube maps have an internal reflection format that indicates how the texture data is represented, and may change how applications choose to use the texture. Cube maps MAY be requested with the <code class="idl"><a data-link-type="idl" href="#dom-xrreflectionformat-srgba8" id="ref-for-dom-xrreflectionformat-srgba8">"srgba8"</a></code> format or the <code class="idl"><a data-link-type="idl" href="#dom-xrsession-preferredreflectionformat" id="ref-for-dom-xrsession-preferredreflectionformat">preferredReflectionFormat</a></code> of the light probe.</p>
+   <table class="data">
+    <thead>
+     <tr>
+      <th><code class="idl"><a data-link-type="idl" href="#enumdef-xrreflectionformat" id="ref-for-enumdef-xrreflectionformat">XRReflectionFormat</a></code> 
+      <th>WebGL Format 
+      <th>WebGL Internal Format 
+      <th>WebGPU Format 
+      <th>HDR 
+    <tbody>
+     <tr>
+      <td><code class="idl"><a data-link-type="idl" href="#dom-xrreflectionformat-srgba8" id="ref-for-dom-xrreflectionformat-srgba8①">"srgba8"</a></code> 
+      <td>RGBA 
+      <td>SRGB8_ALPHA8 
+      <td>"rgba8unorm-srgb" 
+      <td>
+     <tr>
+      <td><code class="idl"><a data-link-type="idl" href="#dom-xrreflectionformat-rgba16f" id="ref-for-dom-xrreflectionformat-rgba16f">"rgba16f"</a></code> 
+      <td>RGBA 
+      <td>RGBA16F 
+      <td>"rgba16float" 
+      <td>✓ 
+   </table>
+   <h3 class="heading settled" data-level="2.3" id="xrlightestimate-interface"><span class="secno">2.3. </span><span class="content">XRLightEstimate</span><a class="self-link" href="#xrlightestimate-interface"></a></h3>
    <p>An <code class="idl"><a data-link-type="idl" href="#xrlightestimate" id="ref-for-xrlightestimate">XRLightEstimate</a></code> provides the estimated lighting values for an <code class="idl"><a data-link-type="idl" href="#xrlightprobe" id="ref-for-xrlightprobe②">XRLightProbe</a></code> at the time represented by an <code class="idl"><a data-link-type="idl" href="https://immersive-web.github.io/webxr/#xrframe" id="ref-for-xrframe">XRFrame</a></code>. <code class="idl"><a data-link-type="idl" href="#xrlightestimate" id="ref-for-xrlightestimate①">XRLightEstimate</a></code>s are queried by passing an <code class="idl"><a data-link-type="idl" href="#xrlightprobe" id="ref-for-xrlightprobe③">XRLightProbe</a></code> to the <code class="idl"><a data-link-type="idl" href="#dom-xrframe-getlightestimate" id="ref-for-dom-xrframe-getlightestimate">getLightEstimate()</a></code> method of an <code class="idl"><a data-link-type="idl" href="https://immersive-web.github.io/webxr/#xrframe" id="ref-for-xrframe①">XRFrame</a></code>.</p>
 <pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext①"><c- g>SecureContext</c-></a>, <a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed①"><c- g>Exposed</c-></a>=<c- n>Window</c->]
 <c- b>interface</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="xrlightestimate"><code><c- g>XRLightEstimate</c-></code></dfn> {
@@ -2215,8 +2245,13 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <p>The string "<dfn class="dfn-paneled" data-dfn-for="feature descriptor" data-dfn-type="dfn" data-noexport id="feature-descriptor-light-estimation">light-estimation</dfn>" is introduced by this module as a new valid <a data-link-type="dfn" href="https://immersive-web.github.io/webxr/#feature-descriptor" id="ref-for-feature-descriptor">feature descriptor</a>. Applications that wish to use light estimation features MUST be requested with an the "<a data-link-type="dfn" href="#feature-descriptor-light-estimation" id="ref-for-feature-descriptor-light-estimation">light-estimation</a>" <a data-link-type="dfn" href="https://immersive-web.github.io/webxr/#feature-descriptor" id="ref-for-feature-descriptor①">feature descriptor</a>.</p>
    <h3 class="heading settled" data-level="3.2" id="xrsession-interface"><span class="secno">3.2. </span><span class="content">XRSession</span><a class="self-link" href="#xrsession-interface"></a></h3>
    <p>The <code class="idl"><a data-link-type="idl" href="https://immersive-web.github.io/webxr/#xrsession" id="ref-for-xrsession①">XRSession</a></code> interface is extended with the ability to create new <code class="idl"><a data-link-type="idl" href="#xrlightprobe" id="ref-for-xrlightprobe⑥">XRLightProbe</a></code> instances.</p>
-<pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://immersive-web.github.io/webxr/#xrsession" id="ref-for-xrsession②"><c- g>XRSession</c-></a> {
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-promise" id="ref-for-idl-promise"><c- b>Promise</c-></a>&lt;<a data-link-type="idl-name" href="#xrlightprobe" id="ref-for-xrlightprobe⑦"><c- n>XRLightProbe</c-></a>> <dfn class="idl-code" data-dfn-for="XRSession" data-dfn-type="method" data-export data-lt="requestLightProbe()" id="dom-xrsession-requestlightprobe"><code><c- g>requestLightProbe</c-></code><a class="self-link" href="#dom-xrsession-requestlightprobe"></a></dfn>();
+<pre class="idl highlight def"><c- b>dictionary</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="dictionary" data-export id="dictdef-xrlightprobeinit"><code><c- g>XRLightProbeInit</c-></code></dfn> {
+  <a data-link-type="idl-name" href="#enumdef-xrreflectionformat" id="ref-for-enumdef-xrreflectionformat①"><c- n>XRReflectionFormat</c-></a> <dfn class="idl-code" data-default="&quot;srgba8&quot;" data-dfn-for="XRLightProbeInit" data-dfn-type="dict-member" data-export data-type="XRReflectionFormat " id="dom-xrlightprobeinit-reflectionformat"><code><c- g>reflectionFormat</c-></code><a class="self-link" href="#dom-xrlightprobeinit-reflectionformat"></a></dfn> = "srgba8";
+};
+
+<c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://immersive-web.github.io/webxr/#xrsession" id="ref-for-xrsession②"><c- g>XRSession</c-></a> {
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-promise" id="ref-for-idl-promise"><c- b>Promise</c-></a>&lt;<a data-link-type="idl-name" href="#xrlightprobe" id="ref-for-xrlightprobe⑦"><c- n>XRLightProbe</c-></a>> <dfn class="idl-code" data-dfn-for="XRSession" data-dfn-type="method" data-export data-lt="requestLightProbe(options)|requestLightProbe()" id="dom-xrsession-requestlightprobe"><code><c- g>requestLightProbe</c-></code><a class="self-link" href="#dom-xrsession-requestlightprobe"></a></dfn>(<c- b>optional</c-> <a data-link-type="idl-name" href="#dictdef-xrlightprobeinit" id="ref-for-dictdef-xrlightprobeinit"><c- n>XRLightProbeInit</c-></a> <dfn class="idl-code" data-dfn-for="XRSession/requestLightProbe(options), XRSession/requestLightProbe()" data-dfn-type="argument" data-export id="dom-xrsession-requestlightprobe-options-options"><code><c- g>options</c-></code><a class="self-link" href="#dom-xrsession-requestlightprobe-options-options"></a></dfn> = {});
+  <c- b>readonly</c-> <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-xrreflectionformat" id="ref-for-enumdef-xrreflectionformat②"><c- n>XRReflectionFormat</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="XRSession" data-dfn-type="attribute" data-export data-readonly data-type="XRReflectionFormat" id="dom-xrsession-preferredreflectionformat"><code><c- g>preferredReflectionFormat</c-></code></dfn>;
 };
 </pre>
    <h3 class="heading settled" data-level="3.3" id="xrframe-interface"><span class="secno">3.3. </span><span class="content">XRFrame</span><a class="self-link" href="#xrframe-interface"></a></h3>
@@ -2247,14 +2282,21 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <li><a href="#dom-xrwebglbinding-getreflectioncubemap">getReflectionCubeMap(lightProbe)</a><span>, in §4.1</span>
    <li><a href="#feature-descriptor-light-estimation">light-estimation</a><span>, in §3.1</span>
    <li><a href="#dom-xrlightprobe-onreflectionchange">onreflectionchange</a><span>, in §2.1</span>
-   <li><a href="#dom-xrlightestimate-primarylightdirection">primaryLightDirection</a><span>, in §2.2</span>
-   <li><a href="#dom-xrlightestimate-primarylightintensity">primaryLightIntensity</a><span>, in §2.2</span>
+   <li><a href="#dom-xrsession-preferredreflectionformat">preferredReflectionFormat</a><span>, in §3.2</span>
+   <li><a href="#dom-xrlightestimate-primarylightdirection">primaryLightDirection</a><span>, in §2.3</span>
+   <li><a href="#dom-xrlightestimate-primarylightintensity">primaryLightIntensity</a><span>, in §2.3</span>
    <li><a href="#dom-xrlightprobe-probespace">probeSpace</a><span>, in §2.1</span>
    <li><a href="#eventdef-xrlightprobe-reflectionchange">reflectionchange</a><span>, in §5.1</span>
+   <li><a href="#dom-xrlightprobeinit-reflectionformat">reflectionFormat</a><span>, in §3.2</span>
    <li><a href="#dom-xrsession-requestlightprobe">requestLightProbe()</a><span>, in §3.2</span>
-   <li><a href="#dom-xrlightestimate-sphericalharmonicscoefficients">sphericalHarmonicsCoefficients</a><span>, in §2.2</span>
-   <li><a href="#xrlightestimate">XRLightEstimate</a><span>, in §2.2</span>
+   <li><a href="#dom-xrsession-requestlightprobe">requestLightProbe(options)</a><span>, in §3.2</span>
+   <li><a href="#dom-xrreflectionformat-rgba16f">"rgba16f"</a><span>, in §2.2</span>
+   <li><a href="#dom-xrlightestimate-sphericalharmonicscoefficients">sphericalHarmonicsCoefficients</a><span>, in §2.3</span>
+   <li><a href="#dom-xrreflectionformat-srgba8">"srgba8"</a><span>, in §2.2</span>
+   <li><a href="#xrlightestimate">XRLightEstimate</a><span>, in §2.3</span>
    <li><a href="#xrlightprobe">XRLightProbe</a><span>, in §2.1</span>
+   <li><a href="#dictdef-xrlightprobeinit">XRLightProbeInit</a><span>, in §3.2</span>
+   <li><a href="#enumdef-xrreflectionformat">XRReflectionFormat</a><span>, in §2.2</span>
    <li><a href="#xr-task-source">XR task source</a><span>, in §5</span>
   </ul>
   <aside class="dfn-panel" data-for="term-for-event">
@@ -2272,31 +2314,31 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <aside class="dfn-panel" data-for="term-for-dompointreadonly">
    <a href="https://drafts.fxtf.org/geometry-1/#dompointreadonly">https://drafts.fxtf.org/geometry-1/#dompointreadonly</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dompointreadonly">2.2. XRLightEstimate</a> <a href="#ref-for-dompointreadonly①">(2)</a>
+    <li><a href="#ref-for-dompointreadonly">2.3. XRLightEstimate</a> <a href="#ref-for-dompointreadonly①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dom-dompointreadonly-w">
    <a href="https://drafts.fxtf.org/geometry-1/#dom-dompointreadonly-w">https://drafts.fxtf.org/geometry-1/#dom-dompointreadonly-w</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-dompointreadonly-w">2.2. XRLightEstimate</a> <a href="#ref-for-dom-dompointreadonly-w①">(2)</a>
+    <li><a href="#ref-for-dom-dompointreadonly-w">2.3. XRLightEstimate</a> <a href="#ref-for-dom-dompointreadonly-w①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dom-dompointreadonly-x">
    <a href="https://drafts.fxtf.org/geometry-1/#dom-dompointreadonly-x">https://drafts.fxtf.org/geometry-1/#dom-dompointreadonly-x</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-dompointreadonly-x">2.2. XRLightEstimate</a>
+    <li><a href="#ref-for-dom-dompointreadonly-x">2.3. XRLightEstimate</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dom-dompointreadonly-y">
    <a href="https://drafts.fxtf.org/geometry-1/#dom-dompointreadonly-y">https://drafts.fxtf.org/geometry-1/#dom-dompointreadonly-y</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-dompointreadonly-y">2.2. XRLightEstimate</a>
+    <li><a href="#ref-for-dom-dompointreadonly-y">2.3. XRLightEstimate</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dom-dompointreadonly-z">
    <a href="https://drafts.fxtf.org/geometry-1/#dom-dompointreadonly-z">https://drafts.fxtf.org/geometry-1/#dom-dompointreadonly-z</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-dompointreadonly-z">2.2. XRLightEstimate</a>
+    <li><a href="#ref-for-dom-dompointreadonly-z">2.3. XRLightEstimate</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-eventhandler">
@@ -2327,13 +2369,13 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <a href="https://heycam.github.io/webidl/#Exposed">https://heycam.github.io/webidl/#Exposed</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-Exposed">2.1. XRLightProbe</a>
-    <li><a href="#ref-for-Exposed①">2.2. XRLightEstimate</a>
+    <li><a href="#ref-for-Exposed①">2.3. XRLightEstimate</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-Float32Array">
    <a href="https://heycam.github.io/webidl/#idl-Float32Array">https://heycam.github.io/webidl/#idl-Float32Array</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-idl-Float32Array">2.2. XRLightEstimate</a> <a href="#ref-for-idl-Float32Array①">(2)</a>
+    <li><a href="#ref-for-idl-Float32Array">2.3. XRLightEstimate</a> <a href="#ref-for-idl-Float32Array①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-promise">
@@ -2346,13 +2388,13 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <a href="https://heycam.github.io/webidl/#SecureContext">https://heycam.github.io/webidl/#SecureContext</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-SecureContext">2.1. XRLightProbe</a>
-    <li><a href="#ref-for-SecureContext①">2.2. XRLightEstimate</a>
+    <li><a href="#ref-for-SecureContext①">2.3. XRLightEstimate</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-xrframe">
    <a href="https://immersive-web.github.io/webxr/#xrframe">https://immersive-web.github.io/webxr/#xrframe</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-xrframe">2.2. XRLightEstimate</a> <a href="#ref-for-xrframe①">(2)</a>
+    <li><a href="#ref-for-xrframe">2.3. XRLightEstimate</a> <a href="#ref-for-xrframe①">(2)</a>
     <li><a href="#ref-for-xrframe②">3. WebXR Device API Integration</a>
     <li><a href="#ref-for-xrframe③">3.3. XRFrame</a> <a href="#ref-for-xrframe④">(2)</a>
    </ul>
@@ -2459,6 +2501,11 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <c- b>attribute</c-> <a data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler"><c- n>EventHandler</c-></a> <a class="idl-code" data-link-type="attribute" data-type="EventHandler" href="#dom-xrlightprobe-onreflectionchange"><c- g>onreflectionchange</c-></a>;
 };
 
+<c- b>enum</c-> <a href="#enumdef-xrreflectionformat"><code><c- g>XRReflectionFormat</c-></code></a> {
+  <a href="#dom-xrreflectionformat-srgba8"><code><c- s>"srgba8"</c-></code></a>,
+  <a href="#dom-xrreflectionformat-rgba16f"><code><c- s>"rgba16f"</c-></code></a>,
+};
+
 [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext"><c- g>SecureContext</c-></a>, <a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed"><c- g>Exposed</c-></a>=<c- n>Window</c->]
 <c- b>interface</c-> <a href="#xrlightestimate"><code><c- g>XRLightEstimate</c-></code></a> {
   <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-Float32Array"><c- b>Float32Array</c-></a> <a class="idl-code" data-link-type="attribute" data-readonly data-type="Float32Array" href="#dom-xrlightestimate-sphericalharmonicscoefficients"><c- g>sphericalHarmonicsCoefficients</c-></a>;
@@ -2466,8 +2513,13 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <c- b>readonly</c-> <c- b>attribute</c-> <a data-link-type="idl-name" href="https://drafts.fxtf.org/geometry-1/#dompointreadonly"><c- n>DOMPointReadOnly</c-></a> <a class="idl-code" data-link-type="attribute" data-readonly data-type="DOMPointReadOnly" href="#dom-xrlightestimate-primarylightintensity"><c- g>primaryLightIntensity</c-></a>;
 };
 
+<c- b>dictionary</c-> <a href="#dictdef-xrlightprobeinit"><code><c- g>XRLightProbeInit</c-></code></a> {
+  <a data-link-type="idl-name" href="#enumdef-xrreflectionformat"><c- n>XRReflectionFormat</c-></a> <a data-default="&quot;srgba8&quot;" data-type="XRReflectionFormat " href="#dom-xrlightprobeinit-reflectionformat"><code><c- g>reflectionFormat</c-></code></a> = "srgba8";
+};
+
 <c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://immersive-web.github.io/webxr/#xrsession"><c- g>XRSession</c-></a> {
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-promise"><c- b>Promise</c-></a>&lt;<a data-link-type="idl-name" href="#xrlightprobe"><c- n>XRLightProbe</c-></a>> <a href="#dom-xrsession-requestlightprobe"><code><c- g>requestLightProbe</c-></code></a>();
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-promise"><c- b>Promise</c-></a>&lt;<a data-link-type="idl-name" href="#xrlightprobe"><c- n>XRLightProbe</c-></a>> <a href="#dom-xrsession-requestlightprobe"><code><c- g>requestLightProbe</c-></code></a>(<c- b>optional</c-> <a data-link-type="idl-name" href="#dictdef-xrlightprobeinit"><c- n>XRLightProbeInit</c-></a> <a href="#dom-xrsession-requestlightprobe-options-options"><code><c- g>options</c-></code></a> = {});
+  <c- b>readonly</c-> <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-xrreflectionformat"><c- n>XRReflectionFormat</c-></a> <a data-readonly data-type="XRReflectionFormat" href="#dom-xrsession-preferredreflectionformat"><code><c- g>preferredReflectionFormat</c-></code></a>;
 };
 
 <c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://immersive-web.github.io/webxr/#xrframe"><c- g>XRFrame</c-></a> {
@@ -2483,7 +2535,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <b><a href="#xrlightprobe">#xrlightprobe</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-xrlightprobe">2.1. XRLightProbe</a> <a href="#ref-for-xrlightprobe①">(2)</a>
-    <li><a href="#ref-for-xrlightprobe②">2.2. XRLightEstimate</a> <a href="#ref-for-xrlightprobe③">(2)</a> <a href="#ref-for-xrlightprobe④">(3)</a> <a href="#ref-for-xrlightprobe⑤">(4)</a>
+    <li><a href="#ref-for-xrlightprobe②">2.3. XRLightEstimate</a> <a href="#ref-for-xrlightprobe③">(2)</a> <a href="#ref-for-xrlightprobe④">(3)</a> <a href="#ref-for-xrlightprobe⑤">(4)</a>
     <li><a href="#ref-for-xrlightprobe⑥">3.2. XRSession</a> <a href="#ref-for-xrlightprobe⑦">(2)</a>
     <li><a href="#ref-for-xrlightprobe⑧">3.3. XRFrame</a> <a href="#ref-for-xrlightprobe⑨">(2)</a>
     <li><a href="#ref-for-xrlightprobe①⓪">4.1. XRWebGLBinding</a> <a href="#ref-for-xrlightprobe①①">(2)</a>
@@ -2494,7 +2546,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <b><a href="#dom-xrlightprobe-probespace">#dom-xrlightprobe-probespace</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-xrlightprobe-probespace">2.1. XRLightProbe</a>
-    <li><a href="#ref-for-dom-xrlightprobe-probespace①">2.2. XRLightEstimate</a> <a href="#ref-for-dom-xrlightprobe-probespace②">(2)</a>
+    <li><a href="#ref-for-dom-xrlightprobe-probespace①">2.3. XRLightEstimate</a> <a href="#ref-for-dom-xrlightprobe-probespace②">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-xrlightprobe-onreflectionchange">
@@ -2503,29 +2555,48 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <li><a href="#ref-for-dom-xrlightprobe-onreflectionchange">2.1. XRLightProbe</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="enumdef-xrreflectionformat">
+   <b><a href="#enumdef-xrreflectionformat">#enumdef-xrreflectionformat</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-enumdef-xrreflectionformat">2.2. XRReflectionFormat</a>
+    <li><a href="#ref-for-enumdef-xrreflectionformat①">3.2. XRSession</a> <a href="#ref-for-enumdef-xrreflectionformat②">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-xrreflectionformat-srgba8">
+   <b><a href="#dom-xrreflectionformat-srgba8">#dom-xrreflectionformat-srgba8</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-xrreflectionformat-srgba8">2.2. XRReflectionFormat</a> <a href="#ref-for-dom-xrreflectionformat-srgba8①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-xrreflectionformat-rgba16f">
+   <b><a href="#dom-xrreflectionformat-rgba16f">#dom-xrreflectionformat-rgba16f</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-xrreflectionformat-rgba16f">2.2. XRReflectionFormat</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="xrlightestimate">
    <b><a href="#xrlightestimate">#xrlightestimate</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-xrlightestimate">2.2. XRLightEstimate</a> <a href="#ref-for-xrlightestimate①">(2)</a> <a href="#ref-for-xrlightestimate②">(3)</a> <a href="#ref-for-xrlightestimate③">(4)</a>
+    <li><a href="#ref-for-xrlightestimate">2.3. XRLightEstimate</a> <a href="#ref-for-xrlightestimate①">(2)</a> <a href="#ref-for-xrlightestimate②">(3)</a> <a href="#ref-for-xrlightestimate③">(4)</a>
     <li><a href="#ref-for-xrlightestimate④">3.3. XRFrame</a> <a href="#ref-for-xrlightestimate⑤">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-xrlightestimate-sphericalharmonicscoefficients">
    <b><a href="#dom-xrlightestimate-sphericalharmonicscoefficients">#dom-xrlightestimate-sphericalharmonicscoefficients</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-xrlightestimate-sphericalharmonicscoefficients">2.2. XRLightEstimate</a> <a href="#ref-for-dom-xrlightestimate-sphericalharmonicscoefficients①">(2)</a> <a href="#ref-for-dom-xrlightestimate-sphericalharmonicscoefficients②">(3)</a>
+    <li><a href="#ref-for-dom-xrlightestimate-sphericalharmonicscoefficients">2.3. XRLightEstimate</a> <a href="#ref-for-dom-xrlightestimate-sphericalharmonicscoefficients①">(2)</a> <a href="#ref-for-dom-xrlightestimate-sphericalharmonicscoefficients②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-xrlightestimate-primarylightdirection">
    <b><a href="#dom-xrlightestimate-primarylightdirection">#dom-xrlightestimate-primarylightdirection</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-xrlightestimate-primarylightdirection">2.2. XRLightEstimate</a> <a href="#ref-for-dom-xrlightestimate-primarylightdirection①">(2)</a>
+    <li><a href="#ref-for-dom-xrlightestimate-primarylightdirection">2.3. XRLightEstimate</a> <a href="#ref-for-dom-xrlightestimate-primarylightdirection①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-xrlightestimate-primarylightintensity">
    <b><a href="#dom-xrlightestimate-primarylightintensity">#dom-xrlightestimate-primarylightintensity</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-xrlightestimate-primarylightintensity">2.2. XRLightEstimate</a> <a href="#ref-for-dom-xrlightestimate-primarylightintensity①">(2)</a>
+    <li><a href="#ref-for-dom-xrlightestimate-primarylightintensity">2.3. XRLightEstimate</a> <a href="#ref-for-dom-xrlightestimate-primarylightintensity①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="feature-descriptor-light-estimation">
@@ -2534,10 +2605,22 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <li><a href="#ref-for-feature-descriptor-light-estimation">3.1. Session Initialization</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="dictdef-xrlightprobeinit">
+   <b><a href="#dictdef-xrlightprobeinit">#dictdef-xrlightprobeinit</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dictdef-xrlightprobeinit">3.2. XRSession</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-xrsession-preferredreflectionformat">
+   <b><a href="#dom-xrsession-preferredreflectionformat">#dom-xrsession-preferredreflectionformat</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-xrsession-preferredreflectionformat">2.2. XRReflectionFormat</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="dom-xrframe-getlightestimate">
    <b><a href="#dom-xrframe-getlightestimate">#dom-xrframe-getlightestimate</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-xrframe-getlightestimate">2.2. XRLightEstimate</a>
+    <li><a href="#ref-for-dom-xrframe-getlightestimate">2.3. XRLightEstimate</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-xrwebglbinding-getreflectioncubemap">
