@@ -2102,7 +2102,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">WebXR Lighting Estimation API Level 1</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-11-17">17 November 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-11-18">18 November 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>Previous Versions:
@@ -2173,6 +2173,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
      <ol class="toc">
       <li><a href="#event-types"><span class="secno">5.1</span> <span class="content">Event Types</span></a>
      </ol>
+    <li><a href="#privacy-security"><span class="secno">6</span> <span class="content">Privacy &amp; Security Considerations</span></a>
     <li>
      <a href="#index"><span class="secno"></span> <span class="content">Index</span></a>
      <ol class="toc">
@@ -2276,6 +2277,27 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <p>The <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#task-source" id="ref-for-task-source">task source</a> for all <a data-link-type="dfn">queue a task</a> in this specification is the <dfn data-dfn-type="dfn" data-noexport id="xr-task-source">XR task source<a class="self-link" href="#xr-task-source"></a></dfn>, unless otherwise specified.</p>
    <h3 class="heading settled" data-level="5.1" id="event-types"><span class="secno">5.1. </span><span class="content">Event Types</span><a class="self-link" href="#event-types"></a></h3>
    <p>The user agent MUST fire a <dfn class="dfn-paneled idl-code" data-dfn-for="XRLightProbe" data-dfn-type="event" data-export id="eventdef-xrlightprobe-reflectionchange"><code>reflectionchange</code></dfn> event on an <code class="idl"><a data-link-type="idl" href="#xrlightprobe" id="ref-for-xrlightprobe①②">XRLightProbe</a></code> object each time the contents of the cube map returned by calling <code class="idl"><a data-link-type="idl" href="#dom-xrwebglbinding-getreflectioncubemap" id="ref-for-dom-xrwebglbinding-getreflectioncubemap">getReflectionCubeMap()</a></code> have changed. The event MUST be of type <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#event" id="ref-for-event">Event</a></code>.</p>
+   <h2 class="heading settled" data-level="6" id="privacy-security"><span class="secno">6. </span><span class="content">Privacy &amp; Security Considerations</span><a class="self-link" href="#privacy-security"></a></h2>
+   <section class="non-normative">
+    <p>The lighting estimation API shares many potential <a data-link-type="dfn" href="https://www.w3.org/TR/ambient-light/#security-and-privacy" id="ref-for-security-and-privacy">privacy and security risks</a> with the Ambient Light Sensor API <a data-link-type="biblio" href="#biblio-ambient-light">[AMBIENT-LIGHT]</a>, including:</p>
+    <ul>
+     <li data-md>
+      <p>Profiling: Lighting Estimation can leak information about user’s use patterns and surroundings. This information can be used to enhance user profiling and behavioral analysis.</p>
+     <li data-md>
+      <p>Cross-device Linking: Two devices can access web sites that include the same third-party script that correlates lighting levels over time.</p>
+     <li data-md>
+      <p>Cross Device Communication: A simple broadcast communication method can use device screen or camera LED flashes to broadcast messages read out with lighting estimation on a nearby device.</p>
+    </ul>
+    <p>In addition to these, there are a few vectors unique to lighting estimation to
+consider.</p>
+    <ul>
+     <li data-md>
+      <p>The lighting estimation returned by the WebXR API explicitly describes the real world environment in close proximity to the user.</p>
+     <li data-md>
+      <p>Reflection cube maps of a high enough resolution approach the same level as camera access.</p>
+    </ul>
+    <p>Lighting estimation must be declared when creating an XR Session as a <a data-link-type="dfn" href="https://immersive-web.github.io/webxr/#feature-descriptor" id="ref-for-feature-descriptor②">feature descriptor</a>, which will allow the user agent to notify the user of the potential privacy implications of allowing the lighting estimation API to be used by the website. The user agent is encouraged to NOT provide real-time updates to any portion of the lighting estimation API, especially the reflection cube map. By default, only low spaital frequency and low temporal frequency information should be returned by the WebXR API. Reflection cube maps should be kept low resolution, unless the user has also consented to camera permissions for a particular origin.</p>
+   </section>
    <p id="back-to-top" role="navigation"><a href="#toc"><abbr title="Back to Top">↑</abbr></a></p>
 <script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script>
   </main>
@@ -2303,6 +2325,12 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <li><a href="#enumdef-xrreflectionformat">XRReflectionFormat</a><span>, in §2.2</span>
    <li><a href="#xr-task-source">XR task source</a><span>, in §5</span>
   </ul>
+  <aside class="dfn-panel" data-for="term-for-security-and-privacy">
+   <a href="https://www.w3.org/TR/ambient-light/#security-and-privacy">https://www.w3.org/TR/ambient-light/#security-and-privacy</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-security-and-privacy">6. Privacy &amp; Security Considerations</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-event">
    <a href="https://dom.spec.whatwg.org/#event">https://dom.spec.whatwg.org/#event</a><b>Referenced in:</b>
    <ul>
@@ -2420,6 +2448,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <a href="https://immersive-web.github.io/webxr/#feature-descriptor">https://immersive-web.github.io/webxr/#feature-descriptor</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-feature-descriptor">3.1. Session Initialization</a> <a href="#ref-for-feature-descriptor①">(2)</a>
+    <li><a href="#ref-for-feature-descriptor②">6. Privacy &amp; Security Considerations</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-xrwebglbinding">
@@ -2431,6 +2460,11 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   </aside>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
+   <li>
+    <a data-link-type="biblio">[AMBIENT-LIGHT]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-security-and-privacy">privacy and security risks</span>
+    </ul>
    <li>
     <a data-link-type="biblio">[DOM]</a> defines the following terms:
     <ul>
@@ -2483,6 +2517,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
+   <dt id="biblio-ambient-light">[AMBIENT-LIGHT]
+   <dd>Anssi Kostiainen. <a href="https://www.w3.org/TR/ambient-light/">Ambient Light Sensor</a>. 7 March 2019. WD. URL: <a href="https://www.w3.org/TR/ambient-light/">https://www.w3.org/TR/ambient-light/</a>
    <dt id="biblio-dom">[DOM]
    <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/">DOM Standard</a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
    <dt id="biblio-geometry-1">[GEOMETRY-1]

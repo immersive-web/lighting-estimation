@@ -24,6 +24,9 @@ spec: webxr-1;
 <pre class="anchors">
 spec: WebGL; urlPrefix: https://www.khronos.org/registry/webgl/specs/latest/1.0/
     type: interface; text: WebGLTexture; url: WebGLTexture
+
+urlPrefix: https://www.w3.org/TR/ambient-light/; spec: AMBIENT-LIGHT
+    type: dfn; text: privacy and security risks; url: security-and-privacy
 </pre>
 
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -227,3 +230,22 @@ Event Types {#event-types}
 -----------
 
 The user agent MUST fire a <dfn event for="XRLightProbe">reflectionchange</dfn> event on an {{XRLightProbe}} object each time the contents of the cube map returned by calling {{XRWebGLBinding/getReflectionCubeMap()}} have changed. The event MUST be of type {{Event}}.
+
+Privacy & Security Considerations {#privacy-security}
+=================================
+
+<section class="non-normative">
+
+The lighting estimation API shares many potential [=privacy and security risks=] with the Ambient Light Sensor API [[!AMBIENT-LIGHT]], including:
+ * Profiling: Lighting Estimation can leak information about user's use patterns and surroundings. This information can be used to enhance user profiling and behavioral analysis.
+ * Cross-device Linking: Two devices can access web sites that include the same third-party script that correlates lighting levels over time.
+ * Cross Device Communication: A simple broadcast communication method can use device screen or camera LED flashes to broadcast messages read out with lighting estimation on a nearby device.
+
+In addition to these, there are a few vectors unique to lighting estimation to
+consider.
+ * The lighting estimation returned by the WebXR API explicitly describes the real world environment in close proximity to the user.
+ * Reflection cube maps of a high enough resolution approach the same level as camera access.
+
+Lighting estimation must be declared when creating an XR Session as a [=feature descriptor=], which will allow the user agent to notify the user of the potential privacy implications of allowing the lighting estimation API to be used by the website. The user agent is encouraged to NOT provide real-time updates to any portion of the lighting estimation API, especially the reflection cube map. By default, only low spaital frequency and low temporal frequency information should be returned by the WebXR API. Reflection cube maps should be kept low resolution, unless the user has also consented to camera permissions for a particular origin.
+
+</section>
