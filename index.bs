@@ -246,6 +246,6 @@ consider.
  * The lighting estimation returned by the WebXR API explicitly describes the real world environment in close proximity to the user.
  * Reflection cube maps of a high enough resolution approach the same level as camera access.
 
-Lighting estimation must be declared when creating an XR Session as a [=feature descriptor=], which will allow the user agent to notify the user of the potential privacy implications of allowing the lighting estimation API to be used by the website. The user agent is encouraged to NOT provide real-time updates to any portion of the lighting estimation API, especially the reflection cube map. By default, only low spaital frequency and low temporal frequency information should be returned by the WebXR API. Reflection cube maps should be kept low enough texture, unless the user has also consented to camera permissions for a particular origin.
+Lighting estimation must be declared when creating an XR Session as a [=feature descriptor=], which will allow the user agent to notify the user of the potential privacy implications of allowing the lighting estimation API to be used by the website. The user agent is encouraged to NOT provide real-time updates to any portion of the lighting estimation API, especially the reflection cube map. By default, only low spaital frequency and low temporal frequency information should be returned by the WebXR API. Reflection cube maps should be kept low resolution, unless the user has also consented to camera permissions for a particular origin.
 
 </section>
