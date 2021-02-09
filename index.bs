@@ -221,7 +221,7 @@ When the <dfn method for="XRSession">requestLightProbe(|options|)</dfn> method i
   1. If |session|’s [=XRSession/ended=] value is <code>true</code>, throw an {{InvalidStateError}} and abort these steps.
 
     <dl class="switch">
-      <dt>If |options|'s {{XRLightProbeInit/reflectionFormat}} is {{XRReflectionFormat/"srgba8"}}, matches {{XRSession/preferredReflectionFormat}} or is otherwise supported by the User Agent:</dt>
+      <dt>If |options|'s {{XRLightProbeInit/reflectionFormat}} is {{XRReflectionFormat/"srgba8"}} or matches |session|'s {{XRSession/preferredReflectionFormat}}:</dt>
       <dd>
         1. Let |probe| be a new {{XRLightProbe}}.
         1. Set |probe|'s [=XRLightProbe/session=] to |session|.
