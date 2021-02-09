@@ -19,11 +19,29 @@ Abstract: This specification describes support for exposing estimates of environ
 <pre class="link-defaults">
 spec: webxr-1;
     type: dfn; text: feature descriptor
+spec:webidl; type:dfn; text:resolve
 </pre>
 
 <pre class="anchors">
 spec: WebGL; urlPrefix: https://www.khronos.org/registry/webgl/specs/latest/1.0/
     type: interface; text: WebGLTexture; url: WebGLTexture
+
+spec: WebXR Device API - Level 1; urlPrefix: https://www.w3.org/TR/webxr/#
+    for: XRSpace;
+        type: dfn; text: native origin; url: xrspace-native-origin
+    type: interface; text: XRSession; url: xrsession-interface
+    for: XRSession;
+        type: dfn; text: ended; url: ended
+        type: dfn; text: list of enabled features; url: xrsession-list-of-enabled-features
+        type: dfn; text: XR device; url: xrsession-xr-device
+    type: interface; text: XRFrame; url: xrframe-interface
+    for: XRFrame;
+        type: dfn; text: session; url: dom-xrframe-session
+        type: dfn; text: active; url: xrframe-active
+    type: dfn; text: capable of supporting; url: capable-of-supporting
+    type: dfn; text: feature descriptor; url: feature-descriptor
+    type: dfn; text: XR device; url: xr-device
+    type: dfn; text: XR task source; url: xr-task-source
 
 urlPrefix: https://www.w3.org/TR/ambient-light/; spec: AMBIENT-LIGHT
     type: dfn; text: privacy and security risks; url: security-and-privacy
@@ -108,7 +126,7 @@ interface XRLightProbe : EventTarget {
 };
 </pre>
 
-The <dfn attribute for="XRLightProbe">probeSpace</dfn> attribute is an {{XRSpace}} that has a [=native origin=] tracking the position and orientation that the {{XRLightProbe}}'s lighting estimations are being generated relative to.
+The <dfn attribute for="XRLightProbe">probeSpace</dfn> attribute is an {{XRSpace}} that has a [=XRSpace/native origin=] tracking the position and orientation that the {{XRLightProbe}}'s lighting estimations are being generated relative to.
 
 The <dfn attribute for="XRLightProbe">onreflectionchange</dfn> attribute is an [=Event handler IDL attribute=] for the {{reflectionchange}} event type.
 
@@ -164,7 +182,7 @@ The <dfn attribute for="XRLightEstimate">sphericalHarmonicsCoefficients</dfn> at
 
 The order of coefficients in {{XRLightEstimate/sphericalHarmonicsCoefficients}}, is  [<var>C</var><sub>0</sub><sup>0</sup>, <var>C</var><sub>1</sub><sup>-1</sup>, <var>C</var><sub>1</sub><sup>0</sup>, <var>C</var><sub>1</sub><sup>1</sup>, <var>C</var><sub>2</sub><sup>-2</sup>, <var>C</var><sub>2</sub><sup>-1</sup>, <var>C</var><sub>2</sub><sup>0</sup>, <var>C</var><sub>2</sub><sup>1</sup>, <var>C</var><sub>2</sub><sup>2</sup>], where <var>C</var><sub><var>l</var></sub><sup><var>m</sup></var> is the coefficient of spherical harmonic <var ignore>Y</var><sub><var>l</var></sub><sup><var>m</sup></var>.
 
-The <dfn attribute for="XRLightEstimate">primaryLightDirection</dfn> represents the direction to the primary light source from the [=native origin=] of the {{XRLightProbe/probeSpace}} of the {{XRLightProbe}} that produced the {{XRLightEstimate}}. The value MUST be a unit length 3D vector and the {{DOMPointReadOnly/w}} value MUST be <code>0.0</code>. If estimated values from the users's environment are not available the {{XRLightEstimate/primaryLightDirection}} MUST be <code>{ x: 0.0, y: 1.0, z: 0.0, w: 0.0 }</code>, representing a light shining straight down from above.
+The <dfn attribute for="XRLightEstimate">primaryLightDirection</dfn> represents the direction to the primary light source from the [=XRSpace/native origin=] of the {{XRLightProbe/probeSpace}} of the {{XRLightProbe}} that produced the {{XRLightEstimate}}. The value MUST be a unit length 3D vector and the {{DOMPointReadOnly/w}} value MUST be <code>0.0</code>. If estimated values from the users's environment are not available the {{XRLightEstimate/primaryLightDirection}} MUST be <code>{ x: 0.0, y: 1.0, z: 0.0, w: 0.0 }</code>, representing a light shining straight down from above.
 
 The <dfn attribute for="XRLightEstimate">primaryLightIntensity</dfn> represents the direction to the primary light source from the origin of the {{XRLightProbe/probeSpace}} of the {{XRLightProbe}} that produced the {{XRLightEstimate}}. The value MUST represent an RGB value mapped to the {{DOMPointReadOnly/x}}, {{DOMPointReadOnly/y}}, and {{DOMPointReadOnly/z}} values respectively where each component is greater than or equal to <code>0.0</code> and the {{DOMPointReadOnly/w}} value MUST be <code>1.0</code>. If estimated values from the users's environment are not available the {{XRLightEstimate/primaryLightIntensity}} MUST be <code>{x: 0.0, y: 0.0, z: 0.0, w: 1.0}</code>, representing no illumination.
 
@@ -181,7 +199,9 @@ The string "<dfn for="feature descriptor">light-estimation</dfn>" is introduced 
 XRSession {#xrsession-interface}
 ---------
 
-The {{XRSession}} interface is extended with the ability to create new {{XRLightProbe}} instances.
+The {{XRSession}} interface is extended with the ability to create new {{XRLightProbe}} instances. {{XRLightProbe}} instances have a <dfn for=XRLightProbe>session</dfn> object, which is the {{XRSession}} that created this {{XRLightProbe}}. And an <dfn for=XRLightProbe>reflection format</dfn> object, which is the {{XRReflectionFormat}} that the light probe may retrieve.
+
+The {{XRSession}} interface is further extended with an attribute {{XRSession/preferredReflectionFormat}}, indicating the {{XRReflectionFormat}} most closely supported by the underlying [=XRSession/XR device=]
 
 <pre class="idl">
 dictionary XRLightProbeInit {
@@ -194,6 +214,28 @@ partial interface XRSession {
 };
 </pre>
 
+<div class="algorithm" data-algorithm="request-light-probe">
+When the <dfn method for="XRSession">requestLightProbe(|options|)</dfn> method is invoked on {{XRSession}} |session|, the user agent MUST run the following steps:
+  1. Let |promise| be [=a new Promise=].
+  1. If the [=light-estimation=] feature descriptor is not [=list/contain|contained=] in the |session|'s [=XRSession/list of enabled features=], [=/reject=] |promise| with {{NotSupportedError}} and abort these steps.
+  1. If |session|’s [=XRSession/ended=] value is <code>true</code>, throw an {{InvalidStateError}} and abort these steps.
+
+    <dl class="switch">
+      <dt>If |options|'s {{XRLightProbeInit/reflectionFormat}} is {{XRReflectionFormat/"srgba8"}} or matches |session|'s {{XRSession/preferredReflectionFormat}}:</dt>
+      <dd>
+        1. Let |probe| be a new {{XRLightProbe}}.
+        1. Set |probe|'s [=XRLightProbe/session=] to |session|.
+        1. Set |probe|'s [=XRLightProbe/reflection format=] to |options|'s {{XRLightProbeInit/reflectionFormat}}
+        1. [=Resolve=] |promise| with |probe|.
+      </dd>
+      <dt>else</dt>
+      <dd>
+        1. [=Reject=] |promise| with a "{{NotSupportedError}}" {{DOMException}}
+      </dd>
+    </dl>
+
+</div>
+
 XRFrame {#xrframe-interface}
 -------
 
@@ -204,6 +246,42 @@ partial interface XRFrame {
   XRLightEstimate? getLightEstimate(XRLightProbe lightProbe);
 };
 </pre>
+
+<div class="algorithm" data-algorithm="get-light-estimate">
+When the <dfn method for="XRFrame">getLightEstimate(|lightProbe|)</dfn> method is invoked on {{XRFrame}} |frame|, the user agent MUST run the following steps:
+
+  1. If |frame|'s [=XRFrame/active=] boolean is `false`, throw an {{InvalidStateError}} and abort these steps.
+  1. Let |session| be |frame|'s {{XRFrame/session}} object.
+  1. If |lightProbe|'s [=XRLightProbe/session=] does not equal |session|, throw an {{InvalidStateError}} and abort these steps.
+  1. Let |device| be |session|'s [=XRSession/XR device=].
+  1. If |device| cannot estimate the lighting for this frame, return null.
+  1. Let |estimate| be a new {{XRLightEstimate}}.
+  1. Populate estimate|'s {{XRLightEstimate/sphericalHarmonicsCoefficients}}, with the coefficients provided by |device|.
+
+    <dl class="switch">
+      <dt>If |device| has an estimated direction for the light source</dt>
+      <dd>
+        1. Set |estimate|'s {{XRLightEstimate/primaryLightDirection}} to the estimated direction of the light source.
+      </dd>
+      <dt>else</dt>
+      <dd>
+        1. Set |estimate|'s {{XRLightEstimate/primaryLightDirection}} to <code>{ x: 0.0, y: 1.0, z: 0.0, w: 0.0 }</code>
+      </dd>
+    </dl>
+    <dl class="switch">
+      <dt>If |device| has an estimated intensity for the light source</dt>
+      <dd>
+        1. Set |estimate|'s {{XRLightEstimate/primaryLightIntensity}} to the estimated intensity of the light source.
+      </dd>
+      <dt>else</dt>
+      <dd>
+        1. Set |estimate|'s {{XRLightEstimate/primaryLightIntensity}} to <code>{x: 0.0, y: 0.0, z: 0.0, w: 1.0}</code>
+      </dd>
+    </dl>
+
+  1. Return |estimate|.
+
+</div>
 
 WebXR Layers Integration {#webxr-layers-integration}
 ========================
@@ -224,7 +302,7 @@ partial interface XRWebGLBinding {
 Events {#events}
 ======
 
-The [=task source=] for all [=tasks queued|queue a task=] in this specification is the <dfn>XR task source</dfn>, unless otherwise specified.
+The [=task source=] for all [=queue a task|tasks queued=] in this specification is the [=XR task source=], unless otherwise specified.
 
 Event Types {#event-types}
 -----------
