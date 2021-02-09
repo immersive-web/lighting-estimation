@@ -880,13 +880,32 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <h3 class="heading settled" data-level="4.1" id="xrwebglbinding-interface"><span class="secno">4.1. </span><span class="content">XRWebGLBinding</span><a class="self-link" href="#xrwebglbinding-interface"></a></h3>
    <p>The <code class="idl"><a data-link-type="idl" href="https://immersive-web.github.io/layers/#xrwebglbinding" id="ref-for-xrwebglbinding①">XRWebGLBinding</a></code> interface is extended with the ability to query a reflection cube map for a given <code class="idl"><a data-link-type="idl" href="#xrlightprobe" id="ref-for-xrlightprobe①③">XRLightProbe</a></code>.</p>
 <pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://immersive-web.github.io/layers/#xrwebglbinding" id="ref-for-xrwebglbinding②"><c- g>XRWebGLBinding</c-></a> {
-  <a data-link-type="idl-name" href="https://www.khronos.org/registry/webgl/specs/latest/1.0/#WebGLTexture" id="ref-for-WebGLTexture"><c- n>WebGLTexture</c-></a>? <dfn class="dfn-paneled idl-code" data-dfn-for="XRWebGLBinding" data-dfn-type="method" data-export data-lt="getReflectionCubeMap(lightProbe)" id="dom-xrwebglbinding-getreflectioncubemap"><code><c- g>getReflectionCubeMap</c-></code></dfn>(<a data-link-type="idl-name" href="#xrlightprobe" id="ref-for-xrlightprobe①④"><c- n>XRLightProbe</c-></a> <dfn class="idl-code" data-dfn-for="XRWebGLBinding/getReflectionCubeMap(lightProbe)" data-dfn-type="argument" data-export id="dom-xrwebglbinding-getreflectioncubemap-lightprobe-lightprobe"><code><c- g>lightProbe</c-></code><a class="self-link" href="#dom-xrwebglbinding-getreflectioncubemap-lightprobe-lightprobe"></a></dfn>);
+  <a data-link-type="idl-name" href="https://www.khronos.org/registry/webgl/specs/latest/1.0/#WebGLTexture" id="ref-for-WebGLTexture"><c- n>WebGLTexture</c-></a>? <a class="idl-code" data-link-type="method" href="#dom-xrwebglbinding-getreflectioncubemap" id="ref-for-dom-xrwebglbinding-getreflectioncubemap"><c- g>getReflectionCubeMap</c-></a>(<a data-link-type="idl-name" href="#xrlightprobe" id="ref-for-xrlightprobe①④"><c- n>XRLightProbe</c-></a> <dfn class="idl-code" data-dfn-for="XRWebGLBinding/getReflectionCubeMap(lightProbe)" data-dfn-type="argument" data-export id="dom-xrwebglbinding-getreflectioncubemap-lightprobe-lightprobe"><code><c- g>lightProbe</c-></code><a class="self-link" href="#dom-xrwebglbinding-getreflectioncubemap-lightprobe-lightprobe"></a></dfn>);
 };
 </pre>
+   <div class="algorithm" data-algorithm="get-reflection-cubemap">
+     When the <dfn class="dfn-paneled idl-code" data-dfn-for="XRWebGLBinding" data-dfn-type="method" data-export id="dom-xrwebglbinding-getreflectioncubemap"><code>getReflectionCubeMap(<var>lightProbe</var>)</code></dfn> method is invoked on <code class="idl"><a data-link-type="idl" href="https://immersive-web.github.io/layers/#xrwebglbinding" id="ref-for-xrwebglbinding③">XRWebGLBinding</a></code> <var>binding</var>, the user agent MUST run the following steps: 
+    <ol>
+     <li data-md>
+      <p>If <var>binding</var>’s <a data-link-type="dfn" href="https://immersive-web.github.io/layers/#xrwebglbinding-context" id="ref-for-xrwebglbinding-context">context</a> is lost, throw an <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#invalidstateerror" id="ref-for-invalidstateerror③">InvalidStateError</a></code> and abort these steps.</p>
+     <li data-md>
+      <p>Let <var>session</var> be <var>binding</var>’s <a data-link-type="dfn" href="https://immersive-web.github.io/layers/#session" id="ref-for-session">session</a>.</p>
+     <li data-md>
+      <p>If <var>session</var> is ended, throw an <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#invalidstateerror" id="ref-for-invalidstateerror④">InvalidStateError</a></code> and abort these steps.</p>
+     <li data-md>
+      <p>If <var>session</var> does not match <var>lightProbe</var>’s <a data-link-type="dfn" href="#xrlightprobe-session" id="ref-for-xrlightprobe-session②">session</a>, throw an <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#invalidstateerror" id="ref-for-invalidstateerror⑤">InvalidStateError</a></code> and abort these steps.</p>
+     <li data-md>
+      <p>Let <var>device</var> be <var>session</var>’s <a data-link-type="dfn" href="https://www.w3.org/TR/webxr/#xrsession-xr-device" id="ref-for-xrsession-xr-device②">XR Device</a>.</p>
+     <li data-md>
+      <p>If no reflection cube map is available from <var>device</var>, return <code>null</code>.</p>
+     <li data-md>
+      <p>Return a new <code class="idl"><a data-link-type="idl" href="https://www.khronos.org/registry/webgl/specs/latest/1.0/#WebGLTexture" id="ref-for-WebGLTexture①">WebGLTexture</a></code> cubemap in the format specified by <var>lightProbe</var>’s <a data-link-type="dfn" href="#xrlightprobe-reflection-format" id="ref-for-xrlightprobe-reflection-format①">reflection format</a> and populated with the data from <var>device</var>.</p>
+    </ol>
+   </div>
    <h2 class="heading settled" data-level="5" id="events"><span class="secno">5. </span><span class="content">Events</span><a class="self-link" href="#events"></a></h2>
    <p>The <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#task-source" id="ref-for-task-source">task source</a> for all <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-queue-a-task">tasks queued</a> in this specification is the <a data-link-type="dfn" href="https://www.w3.org/TR/webxr/#xr-task-source" id="ref-for-xr-task-source">XR task source</a>, unless otherwise specified.</p>
    <h3 class="heading settled" data-level="5.1" id="event-types"><span class="secno">5.1. </span><span class="content">Event Types</span><a class="self-link" href="#event-types"></a></h3>
-   <p>The user agent MUST fire a <dfn class="dfn-paneled idl-code" data-dfn-for="XRLightProbe" data-dfn-type="event" data-export id="eventdef-xrlightprobe-reflectionchange"><code>reflectionchange</code></dfn> event on an <code class="idl"><a data-link-type="idl" href="#xrlightprobe" id="ref-for-xrlightprobe①⑤">XRLightProbe</a></code> object each time the contents of the cube map returned by calling <code class="idl"><a data-link-type="idl" href="#dom-xrwebglbinding-getreflectioncubemap" id="ref-for-dom-xrwebglbinding-getreflectioncubemap">getReflectionCubeMap()</a></code> have changed. The event MUST be of type <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#event" id="ref-for-event">Event</a></code>.</p>
+   <p>The user agent MUST fire a <dfn class="dfn-paneled idl-code" data-dfn-for="XRLightProbe" data-dfn-type="event" data-export id="eventdef-xrlightprobe-reflectionchange"><code>reflectionchange</code></dfn> event on an <code class="idl"><a data-link-type="idl" href="#xrlightprobe" id="ref-for-xrlightprobe①⑤">XRLightProbe</a></code> object each time the contents of the cube map returned by calling <code class="idl"><a data-link-type="idl" href="#dom-xrwebglbinding-getreflectioncubemap" id="ref-for-dom-xrwebglbinding-getreflectioncubemap①">getReflectionCubeMap()</a></code> have changed. The event MUST be of type <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#event" id="ref-for-event">Event</a></code>.</p>
    <h2 class="heading settled" data-level="6" id="privacy-security"><span class="secno">6. </span><span class="content">Privacy &amp; Security Considerations</span><a class="self-link" href="#privacy-security"></a></h2>
    <section class="non-normative">
     <p>The lighting estimation API shares many potential <a data-link-type="dfn" href="https://www.w3.org/TR/ambient-light/#security-and-privacy" id="ref-for-security-and-privacy">privacy and security risks</a> with the Ambient Light Sensor API <a data-link-type="biblio" href="#biblio-ambient-light">[AMBIENT-LIGHT]</a>, including:</p>
@@ -1017,7 +1036,7 @@ consider.</p>
   <aside class="dfn-panel" data-for="term-for-WebGLTexture">
    <a href="https://www.khronos.org/registry/webgl/specs/latest/1.0/#WebGLTexture">https://www.khronos.org/registry/webgl/specs/latest/1.0/#WebGLTexture</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-WebGLTexture">4.1. XRWebGLBinding</a>
+    <li><a href="#ref-for-WebGLTexture">4.1. XRWebGLBinding</a> <a href="#ref-for-WebGLTexture①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-DOMException">
@@ -1044,6 +1063,7 @@ consider.</p>
    <ul>
     <li><a href="#ref-for-invalidstateerror">3.2. XRSession</a>
     <li><a href="#ref-for-invalidstateerror①">3.3. XRFrame</a> <a href="#ref-for-invalidstateerror②">(2)</a>
+    <li><a href="#ref-for-invalidstateerror③">4.1. XRWebGLBinding</a> <a href="#ref-for-invalidstateerror④">(2)</a> <a href="#ref-for-invalidstateerror⑤">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-notsupportederror">
@@ -1147,6 +1167,7 @@ consider.</p>
    <ul>
     <li><a href="#ref-for-xrsession-xr-device">3.2. XRSession</a>
     <li><a href="#ref-for-xrsession-xr-device①">3.3. XRFrame</a>
+    <li><a href="#ref-for-xrsession-xr-device②">4.1. XRWebGLBinding</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-xr-task-source">
@@ -1159,7 +1180,19 @@ consider.</p>
    <a href="https://immersive-web.github.io/layers/#xrwebglbinding">https://immersive-web.github.io/layers/#xrwebglbinding</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-xrwebglbinding">4. WebXR Layers Integration</a>
-    <li><a href="#ref-for-xrwebglbinding①">4.1. XRWebGLBinding</a> <a href="#ref-for-xrwebglbinding②">(2)</a>
+    <li><a href="#ref-for-xrwebglbinding①">4.1. XRWebGLBinding</a> <a href="#ref-for-xrwebglbinding②">(2)</a> <a href="#ref-for-xrwebglbinding③">(3)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-xrwebglbinding-context">
+   <a href="https://immersive-web.github.io/layers/#xrwebglbinding-context">https://immersive-web.github.io/layers/#xrwebglbinding-context</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-xrwebglbinding-context">4.1. XRWebGLBinding</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-session">
+   <a href="https://immersive-web.github.io/layers/#session">https://immersive-web.github.io/layers/#session</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-session">4.1. XRWebGLBinding</a>
    </ul>
   </aside>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
@@ -1236,9 +1269,11 @@ consider.</p>
      <li><span class="dfn-paneled" id="term-for-xr-task-source">xr task source</span>
     </ul>
    <li>
-    <a data-link-type="biblio">[webxr-layers-1]</a> defines the following terms:
+    <a data-link-type="biblio">[webxr layers api]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-xrwebglbinding">XRWebGLBinding</span>
+     <li><span class="dfn-paneled" id="term-for-xrwebglbinding-context">context</span>
+     <li><span class="dfn-paneled" id="term-for-session">session</span>
     </ul>
   </ul>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
@@ -1260,8 +1295,6 @@ consider.</p>
    <dd>Boris Zbarsky. <a href="https://heycam.github.io/webidl/">Web IDL</a>. 15 December 2016. ED. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
    <dt id="biblio-webxr">[WEBXR]
    <dd>Brandon Jones; Manish Goregaokar; Nell Waliczek. <a href="https://www.w3.org/TR/webxr/">WebXR Device API</a>. 24 July 2020. WD. URL: <a href="https://www.w3.org/TR/webxr/">https://www.w3.org/TR/webxr/</a>
-   <dt id="biblio-webxr-layers-1">[WEBXR-LAYERS-1]
-   <dd>WebXR Layers API Level 1 URL: <a href="https://immersive-web.github.io/layers/">https://immersive-web.github.io/layers/</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
 <pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext"><c- g>SecureContext</c-></a>, <a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed"><c- g>Exposed</c-></a>=<c- n>Window</c->]
@@ -1296,7 +1329,7 @@ consider.</p>
 };
 
 <c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://immersive-web.github.io/layers/#xrwebglbinding"><c- g>XRWebGLBinding</c-></a> {
-  <a data-link-type="idl-name" href="https://www.khronos.org/registry/webgl/specs/latest/1.0/#WebGLTexture"><c- n>WebGLTexture</c-></a>? <a href="#dom-xrwebglbinding-getreflectioncubemap"><code><c- g>getReflectionCubeMap</c-></code></a>(<a data-link-type="idl-name" href="#xrlightprobe"><c- n>XRLightProbe</c-></a> <a href="#dom-xrwebglbinding-getreflectioncubemap-lightprobe-lightprobe"><code><c- g>lightProbe</c-></code></a>);
+  <a data-link-type="idl-name" href="https://www.khronos.org/registry/webgl/specs/latest/1.0/#WebGLTexture"><c- n>WebGLTexture</c-></a>? <a class="idl-code" data-link-type="method" href="#dom-xrwebglbinding-getreflectioncubemap"><c- g>getReflectionCubeMap</c-></a>(<a data-link-type="idl-name" href="#xrlightprobe"><c- n>XRLightProbe</c-></a> <a href="#dom-xrwebglbinding-getreflectioncubemap-lightprobe-lightprobe"><code><c- g>lightProbe</c-></code></a>);
 };
 
 </pre>
@@ -1384,12 +1417,14 @@ consider.</p>
    <ul>
     <li><a href="#ref-for-xrlightprobe-session">3.2. XRSession</a>
     <li><a href="#ref-for-xrlightprobe-session①">3.3. XRFrame</a>
+    <li><a href="#ref-for-xrlightprobe-session②">4.1. XRWebGLBinding</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="xrlightprobe-reflection-format">
    <b><a href="#xrlightprobe-reflection-format">#xrlightprobe-reflection-format</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-xrlightprobe-reflection-format">3.2. XRSession</a>
+    <li><a href="#ref-for-xrlightprobe-reflection-format①">4.1. XRWebGLBinding</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dictdef-xrlightprobeinit">
@@ -1427,7 +1462,8 @@ consider.</p>
   <aside class="dfn-panel" data-for="dom-xrwebglbinding-getreflectioncubemap">
    <b><a href="#dom-xrwebglbinding-getreflectioncubemap">#dom-xrwebglbinding-getreflectioncubemap</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-xrwebglbinding-getreflectioncubemap">5.1. Event Types</a>
+    <li><a href="#ref-for-dom-xrwebglbinding-getreflectioncubemap">4.1. XRWebGLBinding</a>
+    <li><a href="#ref-for-dom-xrwebglbinding-getreflectioncubemap①">5.1. Event Types</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="eventdef-xrlightprobe-reflectionchange">
