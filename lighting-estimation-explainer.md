@@ -154,9 +154,9 @@ As an example, a light switch can be flipped in a room, causing the lighting est
 
 Another example occurs when a nearby display is playing a video, such as an advertisement. The light from the display reflects off many surfaces in the room, contributing to the observable ambient light estimate. A timeline of light intensity changes can uniquely identify the video that is playing, even if the monitor is not in direct line-of-sight to the XR device sensors.
 
-A UA MUST apply temporal and spatial filtering of the light estimation to avoid such attacks. A low-pass filter effect can be achieved by averaging the values over the last several seconds. For single scalar values representing light intensity or color, such as `XRLightEstimation.sphericalHarmonicsCoefficients` and `XRLightEstimation.primaryLightIntensity` this can be applied directly with a box-kernel. SH's have a convenient property that they can be summed and interpolated by simply interpolating their coefficients, assuming their orientation is not changing.  These SH coefficients can also be filtered as scalar values with a box-kernel.
+Temporal and spatial filtering of the light estimation can be used to avoid such attacks. A low-pass filter effect can be achieved by averaging the values over the last several seconds. For single scalar values representing light intensity or color, such as `XRLightEstimation.sphericalHarmonicsCoefficients` and `XRLightEstimation.primaryLightIntensity` this can be applied directly with a box-kernel. SH's have a convenient property that they can be summed and interpolated by simply interpolating their coefficients, assuming their orientation is not changing.  These SH coefficients can also be filtered as scalar values with a box-kernel.
 
-Filtered values MUST be first quantized before the box-kernel is applied. Any vectors, such as `XRLightEstimation.primaryLightDirection` should be quantized in 3D space and always return a unit vector.
+When applying quanitzation, the filtered values should be quantized before the box-kernel is applied. Any vectors, such as `XRLightEstimation.primaryLightDirection` should be quantized in 3D space and always return a unit vector.
 
 ## Appendix A: Proposed partial IDL
 This is a partial IDL and is considered additive to the core IDL found in the main [explainer](explainer.md).
