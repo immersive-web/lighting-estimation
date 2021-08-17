@@ -262,7 +262,7 @@ When the <dfn method for="XRFrame">getLightEstimate(|lightProbe|)</dfn> method i
   1. Let |device| be |session|'s [=XRSession/XR device=].
   1. If |device| cannot estimate the lighting for this frame, return null.
   1. Let |estimate| be a new {{XRLightEstimate}}.
-  1. Populate estimate|'s {{XRLightEstimate/sphericalHarmonicsCoefficients}}, with the coefficients provided by |device|.
+  1. Populate |estimate|'s {{XRLightEstimate/sphericalHarmonicsCoefficients}}, with the coefficients provided by |device|.
 
     <dl class="switch">
       <dt>If |device| has an estimated direction for the light source</dt>
