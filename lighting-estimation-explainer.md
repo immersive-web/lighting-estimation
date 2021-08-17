@@ -66,7 +66,7 @@ The `XRLightProbe` itself contains no lighting values, but is used to retrieve t
 let lightProbe = await xrSession.requestLightProbe();
 ```
 
-The position and orientation in space that the lighting is estimated relative to is communicated with the `probeSpace` attribute, which is an `XRSpace`. The `probeSpace` may update it's pose over time as the user moves around their environment.
+The position and orientation in space that the lighting is estimated relative to is communicated with the `probeSpace` attribute, which is an `XRSpace`. The `probeSpace` may update its pose over time as the user moves around their environment.
 
 ```js
 let probePose = xrFrame.getPose(lightProbe.probeSpace, xrReferenceSpace);
