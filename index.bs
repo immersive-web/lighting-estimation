@@ -1,9 +1,9 @@
 <pre class="metadata">
-Shortname: webxrlightingestimation-1
+Shortname: webxr-lighting-estimation-1
 Title: WebXR Lighting Estimation API Level 1
 Group: immersivewebwg
 Status: ED
-TR:
+TR: https://www.w3.org/TR/webxr-lighting-estimation-1/
 ED: https://immersive-web.github.io/lighting-estimation/
 Repository: immersive-web/lighting-estimation
 Level: 1
