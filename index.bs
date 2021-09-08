@@ -14,7 +14,7 @@ Mailing List Archives: https://lists.w3.org/Archives/Public/public-immersive-web
 !Participate: <a href="irc://irc.w3.org:6665/">W3C's #immersive-web IRC</a>
 
 Editor: Brandon Jones 87824, Google https://google.com/, bajones@google.com
-Editor: Kearwood Gilbert 87854, [Mozilla until 2020], kearwood@kearwood.com
+Former Editor: Kearwood Gilbert 87854, [Mozilla until 2020], kearwood@kearwood.com
 
 Abstract: This specification describes support for exposing estimates of environmental lighting conditions to WebXR sessions.
 </pre>
