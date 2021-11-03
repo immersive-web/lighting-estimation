@@ -66,7 +66,7 @@ The `XRLightProbe` itself contains no lighting values, but is used to retrieve t
 let lightProbe = await xrSession.requestLightProbe();
 ```
 
-The position and orientation in space that the lighting is estimated relative to is communicated with the `probeSpace` attribute, which is an `XRSpace`. The `probeSpace` may update it's pose over time as the user moves around their environment.
+The position and orientation in space that the lighting is estimated relative to is communicated with the `probeSpace` attribute, which is an `XRSpace`. The `probeSpace` may update its pose over time as the user moves around their environment.
 
 ```js
 let probePose = xrFrame.getPose(lightProbe.probeSpace, xrReferenceSpace);
@@ -129,7 +129,7 @@ lightProbe.addEventListener('reflectionchange', () => {
 });
 ```
 
-By default the cube map will be returned as a 8BPP sRGB texture. Some underlying runtimes may deliver the text data in a different "native" format however, such high dynamic range formats. The session's preferred internal format for reflection maps is reported by the `XRWebGLBinding.preferredReflectionFormat`, which may alternately be specified when requesting the light probe. Querying cube maps using the preferred format ensures the minimal amount of conversion needs to happen, which in turn may be faster and experience less data loss. Passing any value other than `"srgb8"` or the light probe's `preferredReflectionCubeMapFormat` to the `reflectionFormat` option of `requestLightProbe()` will cause the promise to be rejected.
+By default the cube map will be returned as a 8BPP sRGB texture. Some underlying runtimes may deliver the text data in a different "native" format however, such high dynamic range formats. The session's preferred internal format for reflection maps is reported by the `XRSession.preferredReflectionFormat`, which may alternately be specified when requesting the light probe. Querying cube maps using the preferred format ensures the minimal amount of conversion needs to happen, which in turn may be faster and experience less data loss. Passing any value other than `"srgb8"` or the light probe's `preferredReflectionCubeMapFormat` to the `reflectionFormat` option of `requestLightProbe()` will cause the promise to be rejected.
 
 ```js
 let lightProbe = await xrSession.requestLightProbe({ reflectionFormat: xrSession.preferredReflectionFormat });
