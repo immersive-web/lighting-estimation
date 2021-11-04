@@ -191,9 +191,9 @@ The <dfn attribute for="XRLightEstimate">sphericalHarmonicsCoefficients</dfn> at
 
 The order of coefficients in {{XRLightEstimate/sphericalHarmonicsCoefficients}}, is  [<var>C</var><sub>0</sub><sup>0</sup>, <var>C</var><sub>1</sub><sup>-1</sup>, <var>C</var><sub>1</sub><sup>0</sup>, <var>C</var><sub>1</sub><sup>1</sup>, <var>C</var><sub>2</sub><sup>-2</sup>, <var>C</var><sub>2</sub><sup>-1</sup>, <var>C</var><sub>2</sub><sup>0</sup>, <var>C</var><sub>2</sub><sup>1</sup>, <var>C</var><sub>2</sub><sup>2</sup>], where <var>C</var><sub><var>l</var></sub><sup><var>m</sup></var> is the coefficient of spherical harmonic <var ignore>Y</var><sub><var>l</var></sub><sup><var>m</sup></var>.
 
-The <dfn attribute for="XRLightEstimate">primaryLightDirection</dfn> represents the direction to the primary light source from the [=XRSpace/native origin=] of the {{XRLightProbe/probeSpace}} of the {{XRLightProbe}} that produced the {{XRLightEstimate}}. The value MUST be a unit length 3D vector and the {{DOMPointReadOnly/w}} value MUST be <code>0.0</code>. If estimated values from the users's environment are not available the {{XRLightEstimate/primaryLightDirection}} MUST be <code>{ x: 0.0, y: 1.0, z: 0.0, w: 0.0 }</code>, representing a light shining straight down from above.
+The <dfn attribute for="XRLightEstimate">primaryLightDirection</dfn> represents the direction to the primary light source from the [=XRSpace/native origin=] of the {{XRLightProbe/probeSpace}} of the {{XRLightProbe}} that produced the {{XRLightEstimate}}. The value MUST be a unit length 3D vector and the {{DOMPointReadOnly/w}} value MUST be <code>0.0</code>. If estimated values from the user's environment are not available the {{XRLightEstimate/primaryLightDirection}} MUST be <code>{ x: 0.0, y: 1.0, z: 0.0, w: 0.0 }</code>, representing a light shining straight down from above.
 
-The <dfn attribute for="XRLightEstimate">primaryLightIntensity</dfn> represents the color of the primary light source. The value MUST represent an RGB value mapped to the {{DOMPointReadOnly/x}}, {{DOMPointReadOnly/y}}, and {{DOMPointReadOnly/z}} values respectively where each component is greater than or equal to <code>0.0</code> and the {{DOMPointReadOnly/w}} value MUST be <code>1.0</code>. If estimated values from the users's environment are not available the {{XRLightEstimate/primaryLightIntensity}} MUST be <code>{x: 0.0, y: 0.0, z: 0.0, w: 1.0}</code>, representing no illumination.
+The <dfn attribute for="XRLightEstimate">primaryLightIntensity</dfn> represents the color of the primary light source. The value MUST represent an RGB value mapped to the {{DOMPointReadOnly/x}}, {{DOMPointReadOnly/y}}, and {{DOMPointReadOnly/z}} values respectively where each component is greater than or equal to <code>0.0</code> and the {{DOMPointReadOnly/w}} value MUST be <code>1.0</code>. If estimated values from the user's environment are not available the {{XRLightEstimate/primaryLightIntensity}} MUST be <code>{x: 0.0, y: 0.0, z: 0.0, w: 1.0}</code>, representing no illumination.
 
 WebXR Device API Integration {#webxr-device-api-integration}
 ============================
@@ -265,7 +265,7 @@ When the <dfn method for="XRFrame">getLightEstimate(|lightProbe|)</dfn> method i
   1. Let |device| be |session|'s [=XRSession/XR device=].
   1. If |device| cannot estimate the lighting for this frame, return null.
   1. Let |estimate| be a new {{XRLightEstimate}}.
-  1. Populate estimate|'s {{XRLightEstimate/sphericalHarmonicsCoefficients}}, with the coefficients provided by |device|.
+  1. Populate |estimate|'s {{XRLightEstimate/sphericalHarmonicsCoefficients}}, with the coefficients provided by |device|.
 
     <dl class="switch">
       <dt>If |device| has an estimated direction for the light source</dt>

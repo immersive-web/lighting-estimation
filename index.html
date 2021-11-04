@@ -4,7 +4,7 @@
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <title>WebXR Lighting Estimation API Level 1</title>
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet" type="text/css">
-  <meta content="Bikeshed version d7036035b, updated Fri Oct 8 17:07:11 2021 -0700" name="generator">
+  <meta content="Bikeshed version 83b904c2e, updated Wed Nov 3 17:20:53 2021 -0700" name="generator">
   <link href="https://www.w3.org/TR/webxr-lighting-estimation-1/" rel="canonical">
   <link href="favicon-32x32.png" rel="icon" sizes="32x32" type="image/png">
   <link href="favicon-96x96.png" rel="icon" sizes="96x96" type="image/png">
@@ -699,7 +699,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">WebXR Lighting Estimation API Level 1</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-10-25">25 October 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-11-04">4 November 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -941,7 +941,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
      </div>
     </div>
    </div>
-   <p>The <dfn class="dfn-paneled idl-code" data-dfn-for="XRLightEstimate" data-dfn-type="attribute" data-export id="dom-xrlightestimate-primarylightdirection"><code>primaryLightDirection</code></dfn> represents the direction to the primary light source from the <a data-link-type="dfn" href="https://www.w3.org/TR/webxr/#xrspace-native-origin" id="ref-for-xrspace-native-origin①">native origin</a> of the <code class="idl"><a data-link-type="idl" href="#dom-xrlightprobe-probespace" id="ref-for-dom-xrlightprobe-probespace①">probeSpace</a></code> of the <code class="idl"><a data-link-type="idl" href="#xrlightprobe" id="ref-for-xrlightprobe④">XRLightProbe</a></code> that produced the <code class="idl"><a data-link-type="idl" href="#xrlightestimate" id="ref-for-xrlightestimate②">XRLightEstimate</a></code>. The value MUST be a unit length 3D vector and the <code class="idl"><a data-link-type="idl" href="https://drafts.fxtf.org/geometry-1/#dom-dompointreadonly-w" id="ref-for-dom-dompointreadonly-w">w</a></code> value MUST be <code>0.0</code>. If estimated values from the users’s environment are not available the <code class="idl"><a data-link-type="idl" href="#dom-xrlightestimate-primarylightdirection" id="ref-for-dom-xrlightestimate-primarylightdirection①">primaryLightDirection</a></code> MUST be <code>{ x: 0.0, y: 1.0, z: 0.0, w: 0.0 }</code>, representing a light shining straight down from above.</p>
+   <p>The <dfn class="dfn-paneled idl-code" data-dfn-for="XRLightEstimate" data-dfn-type="attribute" data-export id="dom-xrlightestimate-primarylightdirection"><code>primaryLightDirection</code></dfn> represents the direction to the primary light source from the <a data-link-type="dfn" href="https://www.w3.org/TR/webxr/#xrspace-native-origin" id="ref-for-xrspace-native-origin①">native origin</a> of the <code class="idl"><a data-link-type="idl" href="#dom-xrlightprobe-probespace" id="ref-for-dom-xrlightprobe-probespace①">probeSpace</a></code> of the <code class="idl"><a data-link-type="idl" href="#xrlightprobe" id="ref-for-xrlightprobe④">XRLightProbe</a></code> that produced the <code class="idl"><a data-link-type="idl" href="#xrlightestimate" id="ref-for-xrlightestimate②">XRLightEstimate</a></code>. The value MUST be a unit length 3D vector and the <code class="idl"><a data-link-type="idl" href="https://drafts.fxtf.org/geometry-1/#dom-dompointreadonly-w" id="ref-for-dom-dompointreadonly-w">w</a></code> value MUST be <code>0.0</code>. If estimated values from the user’s environment are not available the <code class="idl"><a data-link-type="idl" href="#dom-xrlightestimate-primarylightdirection" id="ref-for-dom-xrlightestimate-primarylightdirection①">primaryLightDirection</a></code> MUST be <code>{ x: 0.0, y: 1.0, z: 0.0, w: 0.0 }</code>, representing a light shining straight down from above.</p>
    <div class="mdn-anno wrapped">
     <button class="mdn-anno-btn"><b class="less-than-two-engines-flag" title="This feature is in less than two current engines.">⚠</b><span>MDN</span></button>
     <div class="feature">
@@ -958,7 +958,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
      </div>
     </div>
    </div>
-   <p>The <dfn class="dfn-paneled idl-code" data-dfn-for="XRLightEstimate" data-dfn-type="attribute" data-export id="dom-xrlightestimate-primarylightintensity"><code>primaryLightIntensity</code></dfn> represents the color of the primary light source. The value MUST represent an RGB value mapped to the <code class="idl"><a data-link-type="idl" href="https://drafts.fxtf.org/geometry-1/#dom-dompointreadonly-x" id="ref-for-dom-dompointreadonly-x">x</a></code>, <code class="idl"><a data-link-type="idl" href="https://drafts.fxtf.org/geometry-1/#dom-dompointreadonly-y" id="ref-for-dom-dompointreadonly-y">y</a></code>, and <code class="idl"><a data-link-type="idl" href="https://drafts.fxtf.org/geometry-1/#dom-dompointreadonly-z" id="ref-for-dom-dompointreadonly-z">z</a></code> values respectively where each component is greater than or equal to <code>0.0</code> and the <code class="idl"><a data-link-type="idl" href="https://drafts.fxtf.org/geometry-1/#dom-dompointreadonly-w" id="ref-for-dom-dompointreadonly-w①">w</a></code> value MUST be <code>1.0</code>. If estimated values from the users’s environment are not available the <code class="idl"><a data-link-type="idl" href="#dom-xrlightestimate-primarylightintensity" id="ref-for-dom-xrlightestimate-primarylightintensity①">primaryLightIntensity</a></code> MUST be <code>{x: 0.0, y: 0.0, z: 0.0, w: 1.0}</code>, representing no illumination.</p>
+   <p>The <dfn class="dfn-paneled idl-code" data-dfn-for="XRLightEstimate" data-dfn-type="attribute" data-export id="dom-xrlightestimate-primarylightintensity"><code>primaryLightIntensity</code></dfn> represents the color of the primary light source. The value MUST represent an RGB value mapped to the <code class="idl"><a data-link-type="idl" href="https://drafts.fxtf.org/geometry-1/#dom-dompointreadonly-x" id="ref-for-dom-dompointreadonly-x">x</a></code>, <code class="idl"><a data-link-type="idl" href="https://drafts.fxtf.org/geometry-1/#dom-dompointreadonly-y" id="ref-for-dom-dompointreadonly-y">y</a></code>, and <code class="idl"><a data-link-type="idl" href="https://drafts.fxtf.org/geometry-1/#dom-dompointreadonly-z" id="ref-for-dom-dompointreadonly-z">z</a></code> values respectively where each component is greater than or equal to <code>0.0</code> and the <code class="idl"><a data-link-type="idl" href="https://drafts.fxtf.org/geometry-1/#dom-dompointreadonly-w" id="ref-for-dom-dompointreadonly-w①">w</a></code> value MUST be <code>1.0</code>. If estimated values from the user’s environment are not available the <code class="idl"><a data-link-type="idl" href="#dom-xrlightestimate-primarylightintensity" id="ref-for-dom-xrlightestimate-primarylightintensity①">primaryLightIntensity</a></code> MUST be <code>{x: 0.0, y: 0.0, z: 0.0, w: 1.0}</code>, representing no illumination.</p>
    <h2 class="heading settled" data-level="3" id="webxr-device-api-integration"><span class="secno">3. </span><span class="content">WebXR Device API Integration</span><a class="self-link" href="#webxr-device-api-integration"></a></h2>
    <p>Both the <code class="idl"><a data-link-type="idl" href="https://www.w3.org/TR/webxr/#xrsession-interface" id="ref-for-xrsession-interface">XRSession</a></code> and <code class="idl"><a data-link-type="idl" href="https://www.w3.org/TR/webxr/#xrframe-interface" id="ref-for-xrframe-interface②">XRFrame</a></code> interfaces from the <a href="https://www.w3.org/TR/webxr/">WebXR Device API</a> are expanded by this module.</p>
    <h3 class="heading settled" data-level="3.1" id="session-initialization"><span class="secno">3.1. </span><span class="content">Session Initialization</span><a class="self-link" href="#session-initialization"></a></h3>
@@ -1076,7 +1076,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
      <li data-md>
       <p>Let <var>estimate</var> be a new <code class="idl"><a data-link-type="idl" href="#xrlightestimate" id="ref-for-xrlightestimate⑤">XRLightEstimate</a></code>.</p>
      <li data-md>
-      <p>Populate estimate|'s <code class="idl"><a data-link-type="idl" href="#dom-xrlightestimate-sphericalharmonicscoefficients" id="ref-for-dom-xrlightestimate-sphericalharmonicscoefficients③">sphericalHarmonicsCoefficients</a></code>, with the coefficients provided by <var>device</var>.</p>
+      <p>Populate <var>estimate</var>’s <code class="idl"><a data-link-type="idl" href="#dom-xrlightestimate-sphericalharmonicscoefficients" id="ref-for-dom-xrlightestimate-sphericalharmonicscoefficients③">sphericalHarmonicsCoefficients</a></code>, with the coefficients provided by <var>device</var>.</p>
       <dl class="switch">
        <dt>If <var>device</var> has an estimated direction for the light source
        <dd>
@@ -1560,7 +1560,7 @@ consider.</p>
    <dt id="biblio-webidl">[WEBIDL]
    <dd>Edgar Chen; Timothy Gu. <a href="https://webidl.spec.whatwg.org/"><cite>Web IDL Standard</cite></a>. Living Standard. URL: <a href="https://webidl.spec.whatwg.org/">https://webidl.spec.whatwg.org/</a>
    <dt id="biblio-webxr">[WEBXR]
-   <dd>Brandon Jones; et al. <a href="https://www.w3.org/TR/webxr/"><cite>WebXR Device API</cite></a>. 21 October 2021. WD. URL: <a href="https://www.w3.org/TR/webxr/">https://www.w3.org/TR/webxr/</a>
+   <dd>Brandon Jones; et al. <a href="https://www.w3.org/TR/webxr/"><cite>WebXR Device API</cite></a>. 26 October 2021. WD. URL: <a href="https://www.w3.org/TR/webxr/">https://www.w3.org/TR/webxr/</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
 <pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://webidl.spec.whatwg.org/#SecureContext"><c- g>SecureContext</c-></a>, <a class="idl-code" data-link-type="extended-attribute" href="https://webidl.spec.whatwg.org/#Exposed"><c- g>Exposed</c-></a>=<c- n>Window</c->]
