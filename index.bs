@@ -349,3 +349,10 @@ consider.
 Lighting estimation must be declared when creating an XR Session as a [=feature descriptor=], which will allow the user agent to notify the user of the potential privacy implications of allowing the lighting estimation API to be used by the website. The user agent is encouraged to NOT provide real-time updates to any portion of the lighting estimation API, especially the reflection cube map. By default, only low spaital frequency and low temporal frequency information should be returned by the WebXR API. Reflection cube maps should be kept low resolution, unless the user has also consented to camera permissions for a particular origin.  As further mitigation, the Spherical Harmonics and primary light direction MAY be quantized.
 
 </section>
+
+
+<h2 id="changes" class="no-num">
+Changes</h2>
+
+<h3 id="changes-from-20210909" class="no-num">
+Changes from the <a href="https://www.w3.org/TR/2021/WD-webxr-lighting-estimation-1-20210909/">First Public Working Draft 9 September 2021</a></h3>
