@@ -6,8 +6,9 @@
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="Bikeshed version fb1e763a4, updated Tue Mar 1 13:13:50 2022 -0800" name="generator">
+  <meta content="Bikeshed version 37b7e7e68, updated Fri May 27 15:08:11 2022 -0700" name="generator">
   <link href="https://www.w3.org/TR/webxr-lighting-estimation-1/" rel="canonical">
+  <meta content="8da3e628e9f8263f5285b7b258716529046a7a0a" name="document-revision">
   <link href="favicon-32x32.png" rel="icon" sizes="32x32" type="image/png">
   <link href="favicon-96x96.png" rel="icon" sizes="96x96" type="image/png">
 <style>
@@ -701,7 +702,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">WebXR Lighting Estimation API Level 1</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-04-21">21 April 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-06-03">3 June 2022</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -1186,7 +1187,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
      </div>
     </div>
    </div>
-   <p>The user agent MUST fire a <dfn class="dfn-paneled idl-code" data-dfn-for="XRLightProbe" data-dfn-type="event" data-export id="eventdef-xrlightprobe-reflectionchange"><code>reflectionchange</code></dfn> event on an <code class="idl"><a data-link-type="idl" href="#xrlightprobe" id="ref-for-xrlightprobe①④">XRLightProbe</a></code> object each time the contents of the cube map returned by calling <code class="idl"><a data-link-type="idl" href="#dom-xrwebglbinding-getreflectioncubemap" id="ref-for-dom-xrwebglbinding-getreflectioncubemap①">getReflectionCubeMap()</a></code> have changed. The event MUST be of type <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#event" id="ref-for-event">Event</a></code>.</p>
+   <p>The user agent MUST <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-fire" id="ref-for-concept-event-fire">fire an event</a> named <dfn class="dfn-paneled idl-code" data-dfn-for="XRLightProbe" data-dfn-type="event" data-export id="eventdef-xrlightprobe-reflectionchange"><code>reflectionchange</code></dfn> on an <code class="idl"><a data-link-type="idl" href="#xrlightprobe" id="ref-for-xrlightprobe①④">XRLightProbe</a></code> object each time the contents of the cube map returned by calling <code class="idl"><a data-link-type="idl" href="#dom-xrwebglbinding-getreflectioncubemap" id="ref-for-dom-xrwebglbinding-getreflectioncubemap①">getReflectionCubeMap()</a></code> have changed.</p>
    <h2 class="heading settled" data-level="6" id="privacy-security"><span class="secno">6. </span><span class="content">Privacy &amp; Security Considerations</span><a class="self-link" href="#privacy-security"></a></h2>
    <section class="non-normative">
     <p>The lighting estimation API shares many potential <a data-link-type="dfn" href="https://www.w3.org/TR/ambient-light/#security-and-privacy" id="ref-for-security-and-privacy">privacy and security risks</a> with the Ambient Light Sensor API <a data-link-type="biblio" href="#biblio-ambient-light">[AMBIENT-LIGHT]</a>, including:</p>
@@ -1284,16 +1285,16 @@ consider.</p>
     <li><a href="#ref-for-security-and-privacy">6. Privacy &amp; Security Considerations</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-event">
-   <a href="https://dom.spec.whatwg.org/#event">https://dom.spec.whatwg.org/#event</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-event">5.1. Event Types</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-eventtarget">
    <a href="https://dom.spec.whatwg.org/#eventtarget">https://dom.spec.whatwg.org/#eventtarget</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-eventtarget">2.1. XRLightProbe</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-event-fire">
+   <a href="https://dom.spec.whatwg.org/#concept-event-fire">https://dom.spec.whatwg.org/#concept-event-fire</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-event-fire">5.1. Event Types</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dompointreadonly">
@@ -1528,8 +1529,8 @@ consider.</p>
    <li>
     <a data-link-type="biblio">[DOM]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-event">Event</span>
      <li><span class="dfn-paneled" id="term-for-eventtarget">EventTarget</span>
+     <li><span class="dfn-paneled" id="term-for-concept-event-fire">fire an event</span>
     </ul>
    <li>
     <a data-link-type="biblio">[geometry-1]</a> defines the following terms:
@@ -1580,7 +1581,7 @@ consider.</p>
      <li><span class="dfn-paneled" id="term-for-dom-xrframe-session">session</span>
     </ul>
    <li>
-    <a data-link-type="biblio">[webxr device api - level 1]</a> defines the following terms:
+    <a data-link-type="biblio">[WEBXR DEVICE API - LEVEL 1]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-xrframe-interface">XRFrame</span>
      <li><span class="dfn-paneled" id="term-for-xrsession-interface">XRSession</span>
@@ -1592,7 +1593,7 @@ consider.</p>
      <li><span class="dfn-paneled" id="term-for-xr-task-source">xr task source</span>
     </ul>
    <li>
-    <a data-link-type="biblio">[webxr layers api]</a> defines the following terms:
+    <a data-link-type="biblio">[WEBXR LAYERS API]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-xrwebglbinding">XRWebGLBinding</span>
      <li><span class="dfn-paneled" id="term-for-xrwebglbinding-context">context</span>
