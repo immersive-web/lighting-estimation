@@ -329,7 +329,7 @@ The [=task source=] for all [=queue a task|tasks queued=] in this specification 
 Event Types {#event-types}
 -----------
 
-The user agent MUST fire a <dfn event for="XRLightProbe">reflectionchange</dfn> event on an {{XRLightProbe}} object each time the contents of the cube map returned by calling {{XRWebGLBinding/getReflectionCubeMap()}} have changed. The event MUST be of type {{Event}}.
+The user agent MUST [=fire an event=] named <dfn event for="XRLightProbe">reflectionchange</dfn> on an {{XRLightProbe}} object each time the contents of the cube map returned by calling {{XRWebGLBinding/getReflectionCubeMap()}} have changed.
 
 Privacy & Security Considerations {#privacy-security}
 =================================
