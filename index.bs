@@ -20,8 +20,6 @@ Abstract: This specification describes support for exposing estimates of environ
 </pre>
 
 <pre class="link-defaults">
-spec: webxr-1;
-    type: dfn; text: feature descriptor
 spec:webidl; type:dfn; text:resolve
 </pre>
 
